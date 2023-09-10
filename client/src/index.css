@@ -1,13 +1,72 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+	padding: 0px;
+	margin: 0px;
+	border: none;
+  overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  scroll-behavior: smooth;
 }
+
+input {
+  outline: none;
+}
+
+pre {
+  font-family: 'Open Sans', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+a, a:link, a:visited  {
+  text-decoration: none;
+}
+
+a:hover  {
+  text-decoration: none;
+}
+
+#root {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+:root {
+
+  /* colors */
+
+  --purple300: #D3C3F5;
+  --purple400: #8000FF;
+  --blue300: #1969fe;
+  --yellowColor: #EEFD9C;
+  --greyColor: #D9D9D9;
+  --black: #252525;
+  --falseRedBack: rgb(244, 86, 86);
+  --falseRedUnder: rgb(255, 190, 190);
+
+  /* fonts */
+  --fontXS: .4rem;
+  --fontM: .9rem;
+  --fontL: 1.3rem;
+  --fontXL: 2.3rem;
+  --fontXXL: 3.2rem;
+
+  /* borders */
+
+  --borderM: .8rem;
+  --borderL: 1.1rem;
+
+  /* paddings */
+
+  --paddingM: 1.5rem;
+}
+
+input::placeholder {
+  color: var(--greyColor);
+}
+

@@ -1,0 +1,180 @@
+.input_ai_block {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 23vh;
+}
+
+.input_block {
+    height: 9vh;
+    background-color: transparent;
+    width: 60%;
+    outline: 2px solid var(--purple400);
+    transition: all .5s;
+    border-radius: 10rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.input_block:is(:hover, :focus, :active) {
+    box-shadow: 0 0 10px 1px var(--purple400);
+}
+
+.input_ai {
+    width: 80%;
+    background-color: transparent;
+    height: 90%;
+    font-size: 1.1rem;
+    color: var(--black);
+    font-weight: bold;
+}
+
+.button {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 7vh;
+    width: 7vh;
+    border-radius: 1rem;
+    border: 2px solid var(--purple400);
+    background: transparent;
+    overflow: hidden;
+    box-shadow: 0 0 10px 1px var(--purple400);
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+    background-color: var(--purple300);
+}
+  
+.button:hover {
+    background: var(--purple300);
+    box-shadow: 0 0 30px 5px var(--purple400);
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+  
+.button:hover::before {
+    -webkit-animation: sh02 0.5s 0s linear;
+    -moz-animation: sh02 0.5s 0s linear;
+    animation: sh02 0.5s 0s linear;
+}
+  
+.button::before {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 86%;
+    position: absolute;
+    top: 7%;
+    left: 0%;
+    opacity: 0;
+    background: #fff;
+    box-shadow: 0 0 50px 30px #fff;
+    -webkit-transform: skewX(-20deg);
+    -moz-transform: skewX(-20deg);
+    -ms-transform: skewX(-20deg);
+    -o-transform: skewX(-20deg);
+    transform: skewX(-20deg);
+  }
+  
+  @keyframes sh02 {
+    from {
+      opacity: 0;
+      left: 0%;
+    }
+  
+    50% {
+      opacity: 1;
+    }
+  
+    to {
+      opacity: 0;
+      left: 100%;
+    }
+  }
+  
+.button:active {
+    box-shadow: 0 0 0 0 transparent;
+    -webkit-transition: box-shadow 0.2s ease-in;
+    -moz-transition: box-shadow 0.2s ease-in;
+    transition: box-shadow 0.2s ease-in;
+}
+
+.ai_icon {
+    height: 4vh;
+    transition: all 1s ease-in-out;
+    width: 4vh;
+}
+
+button:is(:hover, :focus, :active) .ai_icon{
+    animation: icon_move 1s;
+}
+
+.block_with_textarea_reference {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.user_prompt_block {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    height: auto;
+    font-size: 1.2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--black);
+}
+
+.user_prompt_block_reference_unactive {
+    display: none;
+}
+
+.user_prompt_block_reference_active {
+    display: block;
+}
+
+.block_with_textarea {
+    width: 85%;
+    height: 90REM;
+}
+
+.profile_chat_block {
+    width: 100%;
+    display: flex;
+    font-weight: bold;
+    font-size: 1.7rem;
+}
+
+.profile_chat_block_user {
+    justify-content: end;
+}
+
+.profile_chat_block_ai {
+    justify-content: start;
+}
+
+@keyframes icon_move {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.response_unactive {
+    display: none;
+}
+
+.response_active {
+    display: block;
+    width: 100%;
+    font-size: 1.2rem;
+    color: var(--black);
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--black);
+}

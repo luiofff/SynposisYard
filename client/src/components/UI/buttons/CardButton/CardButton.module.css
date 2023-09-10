@@ -1,0 +1,115 @@
+.button {
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 2rem;
+    transition: .5s;
+    width: 20%;
+    gap: 2rem;
+}
+
+.icon {
+    transition: .5s;
+    height: 2rem;
+    width: 2rem;
+}
+
+.icon_edit {
+    height: 3rem;
+    width: 3rem;
+}
+
+.icon:is(:hover, :focus, :active) {
+    height: 2.6rem;
+    width: 2.6rem;
+}
+
+.icon_secodary {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity .5s linear;
+}
+
+
+
+
+.button:is(:hover, :focus, :active) .icon_secodary {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.button:is(:hover, :focus, :active) .icon_more {
+    animation: .5s ease-in 0s normal rotate_ico;
+    animation-fill-mode: forwards;
+}
+
+
+
+.edit_block_reference {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    gap: 1.5rem;
+    border-radius: 2rem;
+    width: 6rem;
+    height: 4.4rem;
+    background-color: transparent;
+    transition: .5s ease-in-out;
+}
+
+.edit_block_reference:is(:hover, :focus, :active) {
+    outline: 2px solid var(--purple400);
+    width: 25rem;
+    transition: .5s ease-in-out;
+}
+
+.edit_block_reference:is(:hover, :focus, :active) .edit_block_input {
+    display: block;
+}
+
+.edit_block_reference:not(:hover) {
+    width: 4rem;
+    transition: .5s ease-in-out;
+}
+
+.edit_block_input {
+    display: none;
+    width: 98%;
+    height: 80%;
+    background-color: transparent;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.buttons_block {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+@keyframes rotate_ico {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .icon_secodary {
+        display: block;
+    }
+    .button {
+        justify-content: space-between;
+        width: 100%;
+    }
+    .icon_more {
+        display: none;
+    }
+}

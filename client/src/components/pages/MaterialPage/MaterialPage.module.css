@@ -1,0 +1,308 @@
+
+
+.title_block_reference {
+    width: 100%;
+    height: 15vh;
+    display: grid;
+    place-items: center;
+    border-bottom: 2px solid var(--purple400);
+}
+
+
+
+
+.title_block {
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    align-items: center;
+}
+
+.text_title_block {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: end;
+}
+
+.title_text {
+    font-weight: bold;
+    font-size: 1.7rem;
+}
+
+@media screen and (max-width:530px) {
+    .title_text {
+        font-size: 1.3rem;
+    }
+}
+
+@media screen and (max-width:430px) {
+    .title_text {
+        font-size: .8rem;
+    }
+}
+
+.main_space_reference {
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.main_space {
+    
+    height: auto;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 85%;
+}
+
+.components_buttons_space {
+    width: 50%;
+    display: flex;
+    gap: 4rem;
+}
+
+.card_main_text {
+    padding: 1rem;
+    width: 80%;
+}
+
+.block_material {
+    width: 95%;
+    font-size: large;
+}
+
+.block_instruments {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+}
+
+.add_material {
+    display: grid;
+    place-items: center;
+    border-radius: 10rem;
+    width: 3.9rem;
+    height: 3.9rem;
+    outline:2px solid var(--purple400);
+    transition: all .1s;
+}
+
+.plus_icon {
+    width: 2rem;
+    height: 2rem;
+    transition: all .5s ease-in;
+}
+
+.button2:is(:hover, :focus) .plus_icon {
+    animation: move_plus .5s;
+}
+
+
+.add_material:is(:active){
+    outline-offset: 2px;
+}
+
+@keyframes move_plus {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+.text {
+    width: 100%;
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word; 
+}
+
+
+
+
+.block_with_mainButtonsCards {
+    display: flex;
+    gap: 4rem;
+}
+
+.add_card {
+    border: 2.4px solid var(--blue300);
+}
+
+.icon_pdf {
+    width: 20%;
+}
+
+.icon_warning {
+    width: 50%;
+}
+
+.pdf_card {
+    border: 2.4px solid #ff1c1c;
+}
+
+.pdf_card_text {
+    color: #ff1c1c;
+}
+
+.main_from_text {
+    border: 2.4px solid #B061FF;
+}
+
+.test_icon {
+    border: 2.4px solid #38D9E5;
+}
+
+
+.card {
+    background-color: #fff;
+    width: 15rem;
+    height: 10rem;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: .3s ease-in-out;
+}
+
+.card:is(:hover, :focus, :active) {
+    transform: translateY(-1rem);
+}
+
+.title_block_in_card {
+    width: 100%;
+    height: 30%;
+    display: grid;
+    place-items: center;
+}
+
+.card_title {
+    font-weight: bold;
+    font-size: .9rem;
+    color: #111;
+}
+
+.icon_block_reference {
+    height: 70%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.icon_add {
+    height: 52%;
+    width: 52%;
+}
+
+
+.middle_title_block {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    height: 10vh;
+}
+
+.line {
+    width: 60%;
+    height: 3px;
+    background-color: var(--blue300);
+}
+
+
+/* adapt */
+
+@media screen and (max-width:1190px) {
+    .card {
+        width: 10rem;
+        height: 7rem;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .card {
+        width: 8rem;
+        height: 8rem;
+    }
+
+    .card_title {
+        font-size: .6rem;
+    }
+
+    .card:not(:first-child) {
+        margin-left: -50px;
+    }
+
+    .card:hover {
+        transform: translateY(-20px);
+        transition: 0.4s ease-out;
+    }
+      
+    .card:hover ~ .card {
+        position: relative;
+        left: 25px;
+        transition: 0.4s ease-out;
+    }
+
+    .block_with_mainButtonsCards {
+        gap: 0;
+    }
+
+    .card_buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .button2 {
+        font-size: .7rem;
+        padding: .8rem;
+        width: 7rem;
+        height: 5rem;
+    }
+}
+
+@media screen and (max-width: 670px) {
+    .card_buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .button2 {
+        font-size: .7rem;
+        padding: .8rem;
+        width: 7rem;
+        height: 5rem;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .card {
+        width: 6rem;
+        height: 6rem;
+        border-radius: .5rem;
+    }
+
+    .card:not(:first-child) {
+        margin-left: -35px;
+    }
+
+}
+
+
+@media screen and (max-width: 320px) {
+    .button2 {
+        font-size: .5rem;
+        padding: .4rem;
+        width: 5rem;
+        height: 3rem;
+    }
+}
+
+
+
+

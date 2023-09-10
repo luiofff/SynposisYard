@@ -1,0 +1,42 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 4rem;
+    background: linear-gradient(to top, #EEFD9C 50%, #F3F4F6 50%);
+    background-size: 100% 200%;
+    background-position: top left;
+    transition: all .5s ease-out;
+    padding: 2rem;
+    height: 45vh;
+    justify-content: space-between;
+    border: 2px solid #E3E5E6;
+    transition: .5s;
+}
+
+.text_block {
+    max-width: 90%;
+}
+
+.title_text {
+    font-weight: bold;
+    font-size: 160%;
+}
+
+.card:is(:hover, :focus, :active) {
+    background-position: bottom left;
+    color: #595959;
+}
+
+.button_block {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+@media screen and (max-width:425px) {
+    .card {
+        width: 100%;
+    }
+}

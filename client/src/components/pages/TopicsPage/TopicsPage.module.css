@@ -1,0 +1,301 @@
+.navigation_space_block {
+    width: 100%;
+    height: 23vh;
+    display: flex;
+    justify-content: center;
+}
+
+.navigation_space {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+    height: 23vh;
+}
+
+.title__block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.text_block {
+    display: flex;
+    justify-content: end;
+}
+
+.text {
+    font-weight: bold;
+}
+
+.main_title {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1.7rem;
+}
+
+.buttons_block {
+    width: 30%;
+    display: flex;
+    height: 100%;
+    justify-content: start;
+    align-items: center;
+}
+
+.input_block {
+    width:38%;
+    height: 8vh;
+    border-radius: 1rem;
+    outline: 2px solid var(--purple300);
+    transition: all .5s;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #fff;
+}
+
+.input_block:is(:hover, :focus, :active) {
+    outline-offset: 2px;
+}
+
+.input {
+    width: 75%;
+    height: 100%;
+    padding-left: 1.2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    background-color: transparent;
+}
+
+
+
+
+
+
+.input_button {
+    background-color: var(--purple300);
+    border-radius: 1rem;
+    
+    width: 6vh;
+    height: 6vh;
+    display: grid;
+    place-items: center;
+    transition: all .5s;
+    outline: 1px solid var(--purple300);
+}
+
+.input_button:is(:hover, :focus, :active) {
+    outline-offset: 1px;
+}
+
+.icon_search_block {
+    height: 7.1vh;
+    width: 7.1vh;
+    background-color: var(--purple300);
+    display: grid;
+    place-items: center;
+    border-radius: 1rem;
+}
+
+.icon_search {
+    width: 2.4vh;
+    height: 2.4vh;
+}
+
+.icon_search_main {
+    position: absolute;
+}
+
+.main_space {
+    padding-top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.space {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.ul_list {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.line_block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--purple400);
+}
+
+.add_button {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+    width: 7.1vh;
+    height: 7.1vh;
+    border-radius: 1rem;
+    color: #fff;
+    outline: 2px solid var(--purple400);
+    background-color: var(--purple400);
+    transition: all .5s;
+}
+
+.plus_icon {
+    width: 4vh;
+    height: 4vh;
+}
+
+.add_btn_text {
+    display: none;
+}
+
+/* button animation */
+
+.add_button:is(:hover, :focus, :active) {
+    width: 12rem;
+    outline-offset: 2px;
+}
+
+.add_button:is(:hover, :focus, :active) .add_btn_text {
+    position: absolute;
+    display: block;
+}
+
+.add_button:is(:hover, :focus, :active) .plus_icon {
+    opacity: 0;
+}
+
+.main_input_block {
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.dialog_window_back {
+    display: none;
+    width: 100%;
+    height: 100vh;
+    background-color: #d4eaff;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.modal_navbar {
+    width: 100%;
+    height: 12vh;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.close_icon {
+    transition: all .5s ease-in-out;
+}
+
+.active {
+    display: grid;
+    place-items: center;
+}
+
+.close_icon:is(:hover, :focus, :active) {
+    transform: rotate(180deg);
+}
+
+/* adapt */
+
+/* tab */
+
+@media screen and (max-width:768px) {
+    .main_title {
+        font-size: 1.4rem;
+    }
+
+    /* input settings */
+
+    .input_block {
+        width: 85%;
+        height: 7vh;
+    }
+
+    .main_input_block {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .icon_search_block {
+        height: 6.1vh;
+        width: 6.1vh;
+        background-color: var(--purple300);
+        display: grid;
+        place-items: center;
+        border-radius: 1rem;
+    }
+    
+    .icon_search {
+        width: 1.4vh;
+        height: 1.4vh;
+    }
+    
+}
+
+/* mini tab */
+
+@media screen and (max-width:620px) {
+    .main_title {
+        font-size: 1.1rem;
+    }
+}
+
+/* big phone */
+
+@media screen and (max-width:500px) {
+    .staic_text {
+        font-size: .6rem;
+    }
+    .main_title {
+        font-size: .8rem;
+    }
+}  
+
+/* small phone */
+
+@media screen and (max-width:400px) {
+    .staic_text {
+        display: none;
+    }
+
+    .navigation_space {
+        flex-direction: column;
+        gap: .4rem;
+        justify-content: center;
+    }
+}

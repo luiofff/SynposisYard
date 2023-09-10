@@ -1,0 +1,125 @@
+.title_page {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--purple300);
+}
+
+.text_button_block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.text_block {
+    display: flex;
+    gap: 2rem;
+}
+
+.title_text {
+    font-weight: bold;
+    font-size: var(--fontXXL);
+}
+
+.next_content_block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: .5s;
+}
+
+.next_content_button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.arrow_block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.arrow_down {
+    width: 2rem;
+    animation: arrow_move 2s ease-in-out infinite;
+}
+
+.page_about {
+    padding-top: 4rem;
+    width: 100%;
+    height: 100vh;
+    background-color: #111;
+    scroll-behavior: smooth;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+.part_content {
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+}
+.icon_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 12rem;
+    width: 12rem;
+}
+
+.icon {
+    height: 12rem;
+    width: 12rem; 
+}
+
+.text_block_second_content {
+    width: 40%;
+    color: #fff;
+    font-size: var(--fontL);
+    font-weight: bold;
+}
+
+@keyframes arrow_move {
+    25% {
+        transform: translateY(-.5rem);
+    }
+    50% {
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width:615px) {
+    .title_text {
+        font-size: 2rem;
+    }
+
+    .icon_block {
+        height: 9rem;
+        width: 9rem; 
+    }
+    .icon {
+        height: 9rem;
+        width: 9rem; 
+    }
+
+    .text_block_second_content {
+        width: 40%;
+        font-weight: 300;
+        font-size: .7rem;
+    }
+}
+
+@media screen and (max-width:880px) {
+    .text_block {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+

@@ -1,0 +1,43 @@
+.card {
+    display: flex;
+    align-items: center;
+    padding: 4rem;
+    background-color: #F3F4F6;
+    width: 100%;
+    height: 45vh;
+    justify-content: center;
+    transition: .5s;
+    background: linear-gradient(to top, #A2D1C2 50%, #fff 50%);
+    background-size: 100% 200%;
+    background-position: top left;
+    transition: all .5s ease-out;
+}
+
+.ico_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #A2D1C2;
+    padding: 2rem;
+    border-radius: 10rem;
+    transition: all .2s ease-out;
+}
+
+
+.icon {
+    transition: transform .5s ease-out;
+}
+
+  
+.card:is(:hover, :focus, :active) {
+    background-position: bottom left;
+    color: #fff;
+}
+
+.card:is(:hover, :focus, :active) .ico_block {
+    background-color: transparent;
+}
+
+.card:is(:hover, :focus, :active) .icon {
+    transform: rotate(90deg);
+}

@@ -1,0 +1,14 @@
+.button {
+    padding: var(--paddingM);
+    background-color: var(--yellowColor);
+    border-radius: var(--borderL);
+    font-size: var(--fontL);
+    font-weight: bold;
+    outline: 3px solid var(--yellowColor);
+    transition: all .5s;
+    color: var(--purple400);
+}
+
+.button:is(:hover, :active, :focus) {
+    outline-offset: 3px;
+}
