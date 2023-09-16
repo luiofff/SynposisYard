@@ -213,6 +213,7 @@ app.post("/disciplines/:disciplineId/addtopics", async (req, res) => {
 
 // work with materials
 
+
 app.post("/disciplines/:disciplineId/topics/:topicId/addmaterial", async (req, res) => {
   try {
     const { topicId } = req.params;
@@ -286,6 +287,21 @@ app.post('/api/ocr', async (req, res) => {
 // material page backend queries
 
 
+
+app.delete("/disciplines/:disciplineId/topics/:topicId/:materialId/DeleteMaterial", async (req, res) => {
+  try {
+    const { materialId } = req.params;
+    const deleteMaterial = await pool.query("DELETE FROM materials WHERE id=$1", [
+      materialId
+    ]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+
+
+
 app.get("/disciplines/:disciplineId/topics/:topicId/:materialId", async (req, res) => {
   try {
     const { materialId } = req.params;
@@ -312,6 +328,8 @@ app.put("/disciplines/:disciplineId/topics/:topicId/:materialId/updateMaterialDa
     res.status(500).send('Server error');
   }
 });
+
+
 
 // delete and edit materials page functions
 

@@ -36,7 +36,7 @@ export default function DisciplinePage() {
         throw new Error('Discipline not found');
       }
       const disciplineJsonData = await disciplineResponse.json();
-      setDisciplineTitle((disciplineJsonData.discipline_title).slice(1, -1));
+      setDisciplineTitle(disciplineJsonData.discipline_title);
     } catch (error) {
       console.error(error);
       // Handle the error, e.g., set an error state or display an error message to the user
@@ -91,7 +91,7 @@ export default function DisciplinePage() {
             
           </div>
           <div className={styles.nav_blocks}>
-            <h1 className={styles.title}>{disciplineTitle}</h1>
+            <h1 className={styles.title}>{disciplineTitle.slice(1, -1)}</h1>
           </div>
         </div>
       </div>

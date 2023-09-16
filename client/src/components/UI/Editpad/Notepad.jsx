@@ -12,7 +12,6 @@ import html2pdf from 'html2pdf.js';
 
 
 
-
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 function Notepad({topicId, materialId, disciplineId}) {
@@ -99,8 +98,23 @@ function Notepad({topicId, materialId, disciplineId}) {
   return (
     <>
       <div className={styles.editor}>
-        <button onClick={handleGeneratePDF}>SSSS</button>
-        <button className={styles.save_btn} onClick={handleSaveClick}>Сохранить</button>
+          <button class={styles.btn_cssbuttons}>
+            <span>Сохранить</span>
+            <ul>
+              <li>
+                <a>
+                  <div onClick={handleSaveClick} className={styles.saved_title_btn}>Сохранить</div>
+                </a>
+              </li>
+
+              <li>
+                <a onClick={handleGeneratePDF}>
+                  <div className={styles.saved_title_btn}>PDF</div>
+                </a>
+              </li>
+
+            </ul>
+          </button>
         <Editor editorState={editorState} onEditorStateChange={setEditorState} />
       </div>
     </>

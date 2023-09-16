@@ -7,15 +7,25 @@ import Card from "../../UI/Cards/MainCard/Card";
 import search_ico from "./assets/search_icon.svg";
 import AnimatedCubsButton from "../../UI/buttons/AnimatedCubsButton/AnimatedCubsButton";
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux'
+import {updateEditData} from "../../Redux/editDataSlice"
 
 
 function MainSpace() {
 
   const [disciplines, setDisciplines] = useState([]);
-  const [discipline_title, setDiscipline_title] = useState("");
   const [userName, setUserName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [openModal, setOpenModal] = useState(true);
+
+
+  const dispatch = useDispatch();
+
+  const discipline_title = useSelector(state => state.editData.editData);
+
+  const handleChange = (event) => {
+    dispatch(updateEditData(event.target.value));
+  }
 
   const NavToggleOpen = () => {
     setOpenModal(!openModal);
@@ -26,18 +36,14 @@ function MainSpace() {
     try {
       const token = localStorage.getItem('token');
       const email = token ? JSON.parse(atob(token.split('.')[1])).email : '';
-      const body = { discipline_title, email };
-      const response = await fetch('http://localhost:8080/adddiscipline', {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      });
-      setDiscipline_title("");
+      const body = { discipline_title: `"${discipline_title}"`, email };
+      const response = await axios.post('http://localhost:8080/adddiscipline', body);
       setOpenModal(true);
     } catch (err) {
       console.error(err.message);
     }
   };
+  
 
 
 
@@ -87,15 +93,13 @@ function MainSpace() {
       </div>
       <div className={`${styles.space}`}>
         <div className={`${styles.add_subject_modal_window} ${!openModal ? styles.add_subject_modal_window_active : ""}`}>
-        <div className={`${styles.modal_window_objects}`}>
-                        
+        <div className={`${styles.modal_window_objects}`}>                   
                         <div className={`${styles.input_block}`}>
                             <form onSubmit={onSubmitForm}>
                                 <input
                                     type="text" 
                                     placeholder="Название (25 символов)" 
-                                    value={discipline_title}
-                                    onChange={e => setDiscipline_title(e.target.value)}
+                                    onChange={handleChange}
                                     className={`${styles.input_field}`
                                 }/> 
                                 <div className={`${styles.under_line}`}></div>

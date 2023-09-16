@@ -33,7 +33,7 @@ export default function MaterialPage() {
 
     const deleteFunc = async () => {
         try {
-          const deleteDiscipline = await fetch(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/deleteTitle`, {
+          const deleteDiscipline = await fetch(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/${materialId}/DeleteMaterial`, {
             method: "DELETE"
           });
         } catch (err) {
@@ -44,8 +44,8 @@ export default function MaterialPage() {
     const editFunc = async () => {
         try {
           console.log(editData)
-          const updateDiscipline = await axios.put(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/updateTitle`, {
-            topic_title: JSON.stringify(editData)
+          const updateDiscipline = await axios.put(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/${materialId}/updateMaterialData`, {
+            material_data: JSON.stringify(editData)
           });
     
           

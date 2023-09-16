@@ -30,7 +30,7 @@ export default function TopicsPage() {
         
         e.preventDefault();
         try {
-          const body = { topic_title};
+          const body = { topic_title: `"${topic_title}"` };
           const response = await fetch(`http://localhost:8080/disciplines/${disciplineId}/addtopics`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
