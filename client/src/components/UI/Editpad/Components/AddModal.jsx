@@ -1,138 +1,128 @@
-import React from 'react'
-import styles from "./AddModal.module.css"
-import close from "../assets/close.json"
+import React, { useState } from 'react';
+import styles from "./AddModal.module.css";
+import close from "../assets/close.json";
 import lottie from "lottie-web";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '../../../Redux/modalSlice';
 import axios from 'axios';
-import { getDocument } from 'pdfjs-dist';
-import { ContentState } from 'draft-js';
 
-export default function AddModal({topicId, materialId, disciplineId}) {
-    const dispatch = useDispatch()
+export default function AddModal({ topicId, materialId, disciplineId }) {
+  const [file, setFile] = useState(null);
+  const [materialTitle, setMaterialTitle] = useState('');
 
-    const modal_state = useSelector(state => state.modal.modalOpen)
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
-    const [active, setActive] = React.useState(2);
-    const [close_modal, setClose] = React.useState(true);
-    const [material, setMaterial] = React.useState("");
-
-    const toggleClose = () => {
-        setClose(!close_modal);
-    }
-
-
-
-    const toggleSwitch = () => {
-        if (active===1) {
-            setActive(2);
-        } else {
-            setActive(1);
-        }
-    }
-
-
-    const pdfConvertor = async (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-    
-        reader.onload = async (e) => {
-            const contents = e.target.result;
-            const pdf = await getDocument(contents).promise;
-            const numPages = pdf.numPages;
-            let extractedText = '';
-            
-            for (let i = 1; i <= numPages; i++) {
-                const page = await pdf.getPage(i);
-                const textContent = await page.getTextContent();
-                const pageText = textContent.items.map((item) => item.str).join(' ');
-                extractedText += pageText;
-            }
-            setMaterial(ContentState.createFromText(extractedText));
-            
-        };
-    
-        reader.readAsArrayBuffer(file);
-        }
-    
-    const handleSaveClick = async () => {
-        try {
-          const updateDiscipline = await axios.put(
-              `http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/${materialId}/updateMaterialData`,
-              {
-                material_data: material,
-              }
-        );
-      } catch (err) {
-        console.error(err.message);
+  const handleUpload = async () => {
+    try {
+      if (!file) {
+        alert('Please select a file.');
+        return;
       }
-    };
 
-    React.useEffect(() => {
-        // folder animation settings
-        const animationContainerFolder = document.querySelector("#close_icon");
-        const animationInstanceFolder = lottie.loadAnimation({
-        container: animationContainerFolder,
-        animationData: close,
-        loop: false,
-        default: false
-        });
-        animationInstanceFolder.stop();
-        animationContainerFolder.addEventListener("mouseenter", () => {
-            animationInstanceFolder.play();
-        });
-        animationContainerFolder.addEventListener("mouseleave", () => {
-            animationInstanceFolder.stop();
-        });
-        
-    }, []);
+      const formData = new FormData();
+      formData.append('material_file', file);
+      formData.append('material_title', materialTitle);
+
+      const response = await axios.post(
+        `http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/${materialId}/uploadFile`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      console.log(response.data);
+
+      // Reset file and materialTitle after successful upload
+      setFile(null);
+      setMaterialTitle('');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const dispatch = useDispatch();
+
+  const modal_state = useSelector(state => state.modal.modalOpen);
+
+  const [active, setActive] = React.useState(2);
+  const [close_modal, setClose] = React.useState(true);
+  const [material, setMaterial] = React.useState("");
+
+  const toggleClose = () => {
+    setClose(!close_modal);
+  }
+
+  const toggleSwitch = () => {
+    if (active === 1) {
+      setActive(2);
+    } else {
+      setActive(1);
+    }
+  }
+
+  const handleSaveClick = async () => {
+    try {
+      const updateDiscipline = await axios.put(
+        `http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/${materialId}/updateMaterialData`,
+        {
+          material_data: material,
+        }
+      );
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  React.useEffect(() => {
+    // folder animation settings
+    const animationContainerFolder = document.querySelector("#close_icon");
+    const animationInstanceFolder = lottie.loadAnimation({
+      container: animationContainerFolder,
+      animationData: close,
+      loop: false,
+      default: false
+    });
+    animationInstanceFolder.stop();
+    animationContainerFolder.addEventListener("mouseenter", () => {
+      animationInstanceFolder.play();
+    });
+    animationContainerFolder.addEventListener("mouseleave", () => {
+      animationInstanceFolder.stop();
+    });
+
+  }, []);
 
   return (
     <>
-        <div className={styles.modal_background}></div>
-        <div className={styles.modal_refernce}>
-            <div className={styles.main_modal}>
-                <nav className={styles.modal_navbar}>
-                    <div onClick={() => dispatch(closeModal())} id='close_icon' className={styles.close_icon}></div>
-                </nav>
-
-                <div className={styles.filed_space_reference}>
-                    <button onClick={toggleSwitch} className={`${styles["toggle_btn"]} ${active==1 ? "" : styles.active_mode}`}>
-                        <span className={styles.toggle_btn_text}>WORD</span>
-                    </button>
-                    <button onClick={toggleSwitch} className={`${styles["toggle_btn"]} ${active==2 ? "" : styles.active_mode}`}>
-                        <span className={styles.toggle_btn_text}>PDF</span>
-                    </button>
-                </div>
-                
-                
-                {active===1 ?
-                    <form className={styles.form}>
-                        <span className={styles.form_title}>Загрузить PDF</span>
-                        <label  className={styles.drop_container}>
-                            <span className={styles.drop_title}>Перенесите файл сюда</span>
-                            <input type="file" accept="application/pdf" onChange={pdfConvertor} required="" className={styles.file_input}></input>
-                        </label>
-                    </form>
-                    : ""
-                }
-            
-                {active===2 ?
-                    <form className={styles.form}>
-                        <span className={styles.form_title}>Загрузить WORD или TXT</span>
-                        <label  className={styles.drop_container}>
-                            <span className={styles.drop_title}>Перенесите файл сюда</span>
-                            <input type="file" accept="application/pdf" required="" className={styles.file_input}></input>
-                        </label>
-                    </form>
-                    : ""
-                }
-                
-                
-
-                <button onClick={handleSaveClick}>Save</button>
-            </div>
+      <div className={styles.modal_background}></div>
+      <div className={styles.modal_refernce}>
+        <div className={styles.container}>
+          <div className={styles.close_reference_block}>
+            <div onClick={() => dispatch(closeModal())} id='close_icon' className={styles.close_icon}></div>
+          </div>
+          <div className={styles.header}>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier">
+              <path d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 15.4806 20.1956 16.8084 19 17.5M7 10C4.79086 10 3 11.7909 3 14C3 15.4806 3.8044 16.8084 5 17.5M7 10C7.43285 10 7.84965 10.0688 8.24006 10.1959M12 12V21M12 12L15 15M12 12L9 15" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg> <p>Browse File to upload!</p>
+          </div>
+          <label htmlFor="fileInput" className={styles.footer}>
+            <svg fill="#000000" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15.331 6H8.5v20h15V14.154h-8.169z"></path><path d="M18.153 6h-.009v5.342H23.5v-.002z"></path></g></svg>
+            <p>{file ? file.name : 'Not selected file'}</p>
+            <input
+              onChange={handleFileChange}
+              className={styles.file_input_hidden}
+              type="file"
+              id="fileInput"
+              style={{ display: "none" }}
+            />
+          </label>
+          <button onClick={handleUpload}>upload</button>
         </div>
+      </div>
     </>
   )
 }

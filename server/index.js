@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('./db');
 const router = express('router');
+const multer = require('multer');
 
 
 const PORT = process.env.PORT || 8080;
@@ -24,6 +25,13 @@ const checkAuth = (req, res, next) => {
   }
 };
 
+const storage = multer.memoryStorage();
+
+// Initialize Multer
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, // Adjust the file size limit as needed
+});
 
 
 // User registration
@@ -404,7 +412,62 @@ app.put("/disciplines/:disciplineId/topics/:topicId/updateMaterial", async (req,
   }
 })
 
+// upload pdf logic
 
+app.post('/disciplines/:disciplineId/topics/:topicId/:materialId/uploadFile', upload.single('material_file'), async (req, res) => {
+  try {
+    const { disciplineId, topicId } = req.params;
+    const material_title = req.body.material_title;
+    const material_file = req.file.buffer; // Uploaded file data as a Buffer
+
+    // Insert the data into the database
+    const insertQuery = `
+      INSERT INTO materials (material_title, topic_id, material_file)
+      VALUES ($1, $2, $3)
+      RETURNING id;
+    `;
+
+    const result = await pool.query(insertQuery, [material_title, topicId, material_file]);
+    res.status(201).json({ message: 'Material file uploaded successfully', materialId: result.rows[0].id });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// get pdf logic
+
+app.get('/disciplines/:disciplineId/topics/:topicId/:materialId/getFile', async (req, res) => {
+  try {
+    const { materialId } = req.params;
+
+    // Fetch the file data from the database for the specified materialId
+    const query = `
+      SELECT material_title, material_file
+      FROM materials
+      WHERE id = $1
+    `;
+
+    const result = await pool.query(query, [materialId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Material not found' });
+    }
+
+    const { material_title, material_file } = result.rows[0];
+
+    // Set response headers for file download
+    res.setHeader('Content-Disposition', `attachment; filename="${material_title}"`);
+    res.setHeader('Content-Type', 'application/octet-stream');
+
+    // Send the file data as the response
+    res.end(material_file);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
 // Default error handler

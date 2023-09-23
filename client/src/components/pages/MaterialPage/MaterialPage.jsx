@@ -16,6 +16,7 @@ import animationWarning from "./assets/animations/warning.json"
 import lottie from "lottie-web";
 import Notepad from "../../UI/Editpad/Notepad";
 import CardBtn from "../../UI/buttons/CardButton/CardButton";
+import see from "./assets/see.svg"
 
 export default function MaterialPage() {
     const dispatch = useDispatch()
@@ -195,6 +196,18 @@ export default function MaterialPage() {
                         </div>
 
                     </div>
+                    
+                    <div className={styles.pdfCard_space}>
+                        <div className={styles.cardPdf}>
+                            <div className={styles.card_detailsPdf}>
+                                <p className={styles.text_titlePdf}>FILE_NAME</p>
+                            </div>
+                            <button className={styles.card_buttonPdf}>
+                                <img src={see} alt="" />
+                            </button>
+                        </div>
+                    </div>
+
                     <div className={classNames(styles.block_material)}>
                         <Notepad disciplineId={disciplineId} topicId={topicId} material={material} materialId={materialId}/>
                     </div>
