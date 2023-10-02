@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import NavBar from '../../UI/NavBar/NavBar';
 import classNames from 'classnames';
@@ -12,16 +12,55 @@ import axios from "axios"
 import CardBtn from '../../UI/buttons/CardButton/CardButton';
 import {  useSelector } from 'react-redux'
 
+
+const SearchQueryContext = createContext();
+const OpenModalContext = createContext();
+
+const PageActions = () => {
+    const [searchQuery, setSearchQuery] = useContext(SearchQueryContext);
+    const [modalOpen, setmodalOpen] = useContext(OpenModalContext);
+
+    const handleSearchInputChange = (e) => {
+        setSearchQuery(e.target.value); 
+    };
+
+    const handeleOpen = () => {
+        setmodalOpen(!modalOpen)
+    }
+
+    return (
+        <>
+            <div className={styles.main_input_block}>
+                <div className={styles.input_block}>
+
+                    <input 
+                        type="text" 
+                        onChange={handleSearchInputChange}  
+                        className={styles.input}
+                    />
+
+                    <button className={styles.icon_search_block}>
+                        <img src={search_icon} className={styles.icon_search} alt="" />
+                    </button>
+                </div>
+                <button className={styles.add_button} onClick={handeleOpen}>
+                    <img src={plus_icon} className={styles.plus_icon} alt="" />
+                    <span className={styles.add_btn_text}>Добавить</span>
+                </button>
+            </div>
+        </>
+    );
+}
+
 export default function TopicsPage() {
 
-    const [searchQuery, setSearchQuery] = useState("");
     const [userName, setUserName] = useState('');
     const { disciplineId, topicId } = useParams();
-    const [modalOpen, setmodalOpen] = useState(true);
     const [topic_title , setTopicTitle] = useState("");
     const [materials, setMaterials] = useState([]);
     const [material_title, setMaterial_title] = useState("");
-
+    const [searchQuery, setSearchQuery] = useState("");
+    const [modalOpen, setModalOpen] = useState(true); 
 
     // functions for delete and edit buttons
 
@@ -52,21 +91,22 @@ export default function TopicsPage() {
 
     // ________________________________________
 
-    const toggleOpen = () => {
-        setmodalOpen(!modalOpen);
+    const handleModalToggle = () => {
+        setModalOpen(!modalOpen);
     }
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
         try {
-          const body = { material_title };
+          const content = `"${material_title}"`
+          const body = { material_title: content };
           const response = await fetch(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/addmaterial`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
           });
           setMaterial_title("");
-          setmodalOpen(!modalOpen)
+          setModalOpen(!modalOpen)
           window.location.reload();
         } catch (err) {
           console.error(err.message);
@@ -114,82 +154,75 @@ export default function TopicsPage() {
     }, [disciplineId]);
 
     return (
-        <>
-            <NavBar
-                menu_data_first="Войти"
-                btn_data={userName}
-                btn_data_href="/login"
-                menu_data_second="Регистрация"
-                menu_data_first_href="/login"
-                menu_data_second_href="/registration"
-            />
+        <SearchQueryContext.Provider value={[searchQuery, setSearchQuery]}>
+            <OpenModalContext.Provider value={[modalOpen, handleModalToggle]}>
+                <>
+                    <NavBar
+                        menu_data_first="Войти"
+                        btn_data={userName}
+                        btn_data_href="/login"
+                        menu_data_second="Регистрация"
+                        menu_data_first_href="/login"
+                        menu_data_second_href="/registration"
+                    />
 
-            <div className={styles.navigation_space_block}>
-                <div className={styles.navigation_space}>
-                    <div className={styles.components_buttons_space}>
-                        <AnimatedCubsButton />
-                        <CardBtn disciplineId={disciplineId} deleteFunc={deleteFunc} editFunc={editFunc}/>
+                    <div className={styles.navigation_space_block}>
+                        <div className={styles.navigation_space}>
+                            <div className={styles.components_buttons_space}>
+                                <AnimatedCubsButton />
+                                <CardBtn disciplineId={disciplineId} deleteFunc={deleteFunc} editFunc={editFunc}/>
+                            </div>
+                            
+                            <div className={styles.title__block}>
+                                <div className={styles.text_block}>
+                                    <span className={classNames(styles.text, styles.staic_text)}>Материалы по теме</span>
+                                </div>
+                                <div className={styles.text_block}>
+                                    <h1 className={classNames(styles.text, styles.main_title)}>{(topic_title).slice(1, -1)}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={styles.line_block}>
+                        <div className={styles.line}></div>
                     </div>
                     
-                    <div className={styles.title__block}>
-                        <div className={styles.text_block}>
-                            <span className={classNames(styles.text, styles.staic_text)}>Материалы по теме</span>
+                    <div className={styles.main_space}>
+                        <div className={styles.space}>
+
+                            <PageActions />
+                            
+                            <ul className={styles.ul_list}>
+                                
+                                {materials &&
+                                    materials
+                                    .filter((material) => material.material_title.toLowerCase().includes(searchQuery.toLowerCase()))
+                                    .map((material) => (
+                                        <Link to={`/disciplines/${disciplineId}/topics/${topicId}/${material.id}`} key={material.id}>
+                                            <SubscriptionElement key={material.id} material_title={material.material_title}/>
+                                        </Link>
+                                ))}
+                                
+                            </ul>
                         </div>
-                        <div className={styles.text_block}>
-                            <h1 className={classNames(styles.text, styles.main_title)}>{(topic_title).slice(1, -1)}</h1>
+
+
+                        <div className={`${styles["dialog_window_back"]} ${!modalOpen ? styles.active : ""}`}>
+                                <div className={styles.modal_navbar}>
+                                    <img src={close} onClick={handleModalToggle} className={styles.close_icon} alt="" />
+                                </div>
+                                <form onSubmit={onSubmitForm} className={styles.input_block}>
+                                        <input type="text" onChange={e => setMaterial_title(e.target.value)} placeholder="Название (макс. 25 символов)" value={material_title}  className={styles.input}/>
+                                        <button type='submit' className={styles.icon_search_block}>
+                                            <img src={plus_icon} className={styles.icon_search} alt="" />
+                                        </button>
+                                </form>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div className={styles.line_block}>
-                <div className={styles.line}></div>
-            </div>
-            
-            <div className={styles.main_space}>
-                <div className={styles.space}>
-                    <div className={styles.main_input_block}>
-                        <div className={styles.input_block}>
-                            <input type="text" onChange={e => setSearchQuery(e.target.value)}  className={styles.input}/>
-                            <button className={styles.icon_search_block}>
-                                <img src={search_icon} className={styles.icon_search} alt="" />
-                            </button>
-                        </div>
-                        <button className={styles.add_button} onClick={toggleOpen}>
-                            <img src={plus_icon} className={styles.plus_icon} alt="" />
-                            <span className={styles.add_btn_text}>Добавить</span>
-                        </button>
-                    </div>
-                    
-                    <ul className={styles.ul_list}>
-                        
-                        {materials &&
-                            materials
-                            .filter((material) => material.material_title.toLowerCase().includes(searchQuery.toLowerCase()))
-                            .map((material) => (
-                                <Link to={`/disciplines/${disciplineId}/topics/${topicId}/${material.id}`} key={material.id}>
-                                    <SubscriptionElement key={material.id} material_title={material.material_title}/>
-                                </Link>
-                        ))}
-                        
-                    </ul>
-                </div>
-
-
-                <div className={`${styles["dialog_window_back"]} ${!modalOpen ? styles.active : ""}`}>
-                        <div className={styles.modal_navbar}>
-                            <img src={close} onClick={toggleOpen} className={styles.close_icon} alt="" />
-                        </div>
-                        <form onSubmit={onSubmitForm} className={styles.input_block}>
-                                <input type="text" onChange={e => setMaterial_title(e.target.value)} placeholder="Название (макс. 25 символов)" value={material_title}  className={styles.input}/>
-                                <button type='submit' className={styles.icon_search_block}>
-                                    <img src={plus_icon} className={styles.icon_search} alt="" />
-                                </button>
-
-                        </form>
-                </div>
-            </div>
-
-        </>
+                </>
+            </OpenModalContext.Provider>
+        </SearchQueryContext.Provider>
     )
 }

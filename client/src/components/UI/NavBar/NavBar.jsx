@@ -52,7 +52,6 @@ function NavBar({check, btn_data, btn_data_href, menu_data_first, menu_data_seco
                     <div className={styles.nav_block}>
                         <div className={styles.logo_block}>
                             <div id='logo' className={styles.logo}></div>
-                            {/* <img src={logo} alt="" className={styles.logo}/> */}
                         </div>
                     </div>
 

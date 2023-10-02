@@ -18,6 +18,23 @@ import Notepad from "../../UI/Editpad/Notepad";
 import CardBtn from "../../UI/buttons/CardButton/CardButton";
 import see from "./assets/see.svg"
 
+
+const PdfCard = ({ card_title }) => {
+    return (
+      <>
+        <div className={styles.cardPdf}>
+          <div className={styles.card_detailsPdf}>
+            <p className={styles.text_titlePdf}>{ card_title }</p>
+          </div>
+          <button className={styles.card_buttonPdf}>
+            <img src={see} alt="" />
+          </button>
+        </div>
+      </>
+    );
+};
+
+
 export default function MaterialPage() {
     const dispatch = useDispatch()
     const modal_state = useSelector(state => state.modal.modalOpen)
@@ -93,7 +110,7 @@ export default function MaterialPage() {
     };
 
     useEffect(() => {
-      fetchData();
+        fetchData();
         // folder animation settings
         const animationContainerFolder = document.querySelector("#folder");
         const animationInstanceFolder = lottie.loadAnimation({
@@ -128,8 +145,8 @@ export default function MaterialPage() {
         animationContainerWarning.addEventListener("mouseleave", () => {
         animationInstanceWarning.stop();
         });
-        console.log(modal_state)
     }, [disciplineId]);
+
 
     return (
         <>
@@ -141,7 +158,7 @@ export default function MaterialPage() {
                 menu_data_first_href="/login"
                 menu_data_second_href="/registration"
             />
-
+            
             <div className={styles.title_block_reference}>
                 <div className={styles.title_block}>
                     <div className={styles.components_buttons_space}>
@@ -150,7 +167,7 @@ export default function MaterialPage() {
                     </div>
                     
                     <div className={styles.text_title_block}>
-                        <span className={styles.title_text}>{material_title}</span>
+                        <span className={styles.title_text}>{material_title.slice(1, -1)}</span>
                     </div>
                 </div>
             </div>
@@ -198,15 +215,9 @@ export default function MaterialPage() {
                     </div>
                     
                     <div className={styles.pdfCard_space}>
-                        <div className={styles.cardPdf}>
-                            <div className={styles.card_detailsPdf}>
-                                <p className={styles.text_titlePdf}>FILE_NAME</p>
-                            </div>
-                            <button className={styles.card_buttonPdf}>
-                                <img src={see} alt="" />
-                            </button>
-                        </div>
+                        <PdfCard card_title={"название"}/>
                     </div>
+                
 
                     <div className={classNames(styles.block_material)}>
                         <Notepad disciplineId={disciplineId} topicId={topicId} material={material} materialId={materialId}/>

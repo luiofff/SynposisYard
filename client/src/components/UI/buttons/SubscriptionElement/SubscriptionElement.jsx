@@ -8,7 +8,7 @@ export default function SubscriptionElement({material_title}) {
       <div className={styles.list__element_block}>
         <img src={right_arrow_list_element} className={styles.icon_block} alt="" />
         <div className={styles.text_block}>
-            <span className={styles.text_title}>{material_title}</span>
+            <span className={styles.text_title}>{material_title.slice(1, -1)}</span>
         </div>
       </div>
     </>

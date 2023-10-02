@@ -57,7 +57,7 @@
     place-items: center;
     padding: 1rem;
     border-radius: var(--borderM);
-    background-color: var(--purple300);
+    background-color: var(--yellowColor);
 }
 
 .nav_button:is(:hover, :focus, :active) {
