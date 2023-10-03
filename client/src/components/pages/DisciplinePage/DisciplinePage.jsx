@@ -6,6 +6,7 @@ import styles from './DisciplinePage.module.css';
 import AnimatedCubsButton from '../../UI/buttons/AnimatedCubsButton/AnimatedCubsButton';
 import axios from 'axios';
 import {  useSelector } from 'react-redux'
+import classNames from 'classnames';
 
 export default function DisciplinePage() {
   const [userName, setUserName] = useState('');
@@ -36,7 +37,10 @@ export default function DisciplinePage() {
         throw new Error('Discipline not found');
       }
       const disciplineJsonData = await disciplineResponse.json();
+      console.log(disciplineJsonData.discipline_title);
+      
       setDisciplineTitle(disciplineJsonData.discipline_title);
+
     } catch (error) {
       console.error(error);
       // Handle the error, e.g., set an error state or display an error message to the user
@@ -86,12 +90,11 @@ export default function DisciplinePage() {
       <div className={styles.settings_block}>
         <div className={styles.settings_block_container}>
           <div className={styles.nav_blocks}>
-            <AnimatedCubsButton />
             <CardBtn  disciplineId={disciplineId} deleteFunc={deleteFunc} editFunc={editFunc}/>
             
           </div>
-          <div className={styles.nav_blocks}>
-            <h1 className={styles.title}>{disciplineTitle.slice(1, -1)}</h1>
+          <div className={styles.nav_title}>
+            <h1 className={classNames(styles.title, styles.text_of_title)}>{disciplineTitle.slice(1, -1)}</h1>
           </div>
         </div>
       </div>

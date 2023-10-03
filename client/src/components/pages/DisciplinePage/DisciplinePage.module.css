@@ -81,7 +81,7 @@
 
 
 .title_block {
-    z-index: 999;
+    z-index: -1;
     width: 100%;
     height: 1%;
     display: grid;
@@ -152,11 +152,36 @@
     transition: all 0.5s ease-out;
     color: #ffffff;
 }
+
+.text_of_title {
+    overflow: hidden; /* Обрезаем все, что не помещается в область */
+    white-space: nowrap; /* Запрещаем перенос строк */
+    text-overflow: clip; 
+}
   
   
 /* adapt */
 
 @media screen and (max-width:600px) {
+    .nav_title {
+        width: 100%;
+        display: grid;
+        place-items: center;
+    }
+
+    .settings_block {
+        height: auto;
+        padding: 2rem 0;
+    }
+    .nav_blocks {
+        justify-content: center;
+        width: 100%;
+    }
+    .settings_block_container {
+        gap: 1.5rem;
+        flex-direction: column;
+    }
+
     .card_space {
         flex-direction: column;
     }

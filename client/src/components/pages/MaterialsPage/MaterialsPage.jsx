@@ -166,23 +166,9 @@ export default function TopicsPage() {
                         menu_data_second_href="/registration"
                     />
 
-                    <div className={styles.navigation_space_block}>
-                        <div className={styles.navigation_space}>
-                            <div className={styles.components_buttons_space}>
-                                <AnimatedCubsButton />
-                                <CardBtn disciplineId={disciplineId} deleteFunc={deleteFunc} editFunc={editFunc}/>
-                            </div>
-                            
-                            <div className={styles.title__block}>
-                                <div className={styles.text_block}>
-                                    <span className={classNames(styles.text, styles.staic_text)}>Материалы по теме</span>
-                                </div>
-                                <div className={styles.text_block}>
-                                    <h1 className={classNames(styles.text, styles.main_title)}>{(topic_title).slice(1, -1)}</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    <CardBtn deleteFunc={deleteFunc} editFunc={editFunc} pre_title={'Материалы по теме'} title={(topic_title).slice(1, -1)}/>
+                    
 
                     <div className={styles.line_block}>
                         <div className={styles.line}></div>
@@ -194,16 +180,25 @@ export default function TopicsPage() {
                             <PageActions />
                             
                             <ul className={styles.ul_list}>
-                                
-                                {materials &&
+                                {materials.length > 0 ? (
                                     materials
-                                    .filter((material) => material.material_title.toLowerCase().includes(searchQuery.toLowerCase()))
+                                    .filter((material) =>
+                                        material.material_title.toLowerCase().includes(searchQuery.toLowerCase())
+                                    )
                                     .map((material) => (
-                                        <Link to={`/disciplines/${disciplineId}/topics/${topicId}/${material.id}`} key={material.id}>
-                                            <SubscriptionElement key={material.id} material_title={material.material_title}/>
+                                        <Link
+                                        to={`/disciplines/${disciplineId}/topics/${topicId}/${material.id}`}
+                                        key={material.id}
+                                        >
+                                        <SubscriptionElement
+                                            key={material.id}
+                                            material_title={material.material_title}
+                                        />
                                         </Link>
-                                ))}
-                                
+                                    ))
+                                ) : (
+                                    <p onClick={handleModalToggle} className={styles.warning_message}>Здесь пока ничего нет...</p>
+                                )}
                             </ul>
                         </div>
 

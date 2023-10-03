@@ -103,7 +103,6 @@ export default function TopicsPage() {
 
             <div className={styles.navigation_space_block}>
                 <div className={styles.navigation_space}>
-                    <AnimatedCubsButton />
 
                     <div className={styles.title__block}>
                         <div className={styles.text_block}>
@@ -136,15 +135,21 @@ export default function TopicsPage() {
                     </div>
                     
                     <ul className={styles.ul_list}>
+
+                        {topics.length>0 ? (
+                            topics &&
+                                topics
+                                .filter((topic) => topic.topic_title.toLowerCase().includes(searchQuery.toLowerCase()))
+                                .map((topic) => (
+                                    <Link to={`/disciplines/${disciplineId}/topics/${topic.id}`}>
+                                        <SubscriptionElement key={topic.id} material_title={(topic.topic_title)}/>
+                                    </Link>   
+                            ))) 
+                            :
+                            (<p onClick={toggleOpen} className={styles.warning_message}>Здесь пока ничего нет...</p>)
+                        }
                         
-                        {topics &&
-                            topics
-                            .filter((topic) => topic.topic_title.toLowerCase().includes(searchQuery.toLowerCase()))
-                            .map((topic) => (
-                                <Link to={`/disciplines/${disciplineId}/topics/${topic.id}`}>
-                                    <SubscriptionElement key={topic.id} material_title={(topic.topic_title).slice(1, -1)}/>
-                                </Link>   
-                        ))}
+                        
                         
                     </ul>
                 </div>

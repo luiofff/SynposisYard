@@ -235,11 +235,24 @@
     transform: rotate(180deg);
 }
 
+.warning_message {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color:  var(--purple400);
+}
+
 /* adapt */
 
-/* tab */
-
 @media screen and (max-width:768px) {
+
+    .components_buttons_space {
+        width: 70%;
+    }
+
+    .title__block {
+        width: 30%;
+    }
+
     .main_title {
         font-size: 1.4rem;
     }
@@ -276,6 +289,15 @@
 /* mini tab */
 
 @media screen and (max-width:620px) {
+
+    .components_buttons_space {
+        width: 60%;
+    }
+
+    .title__block {
+        width: 40%;
+    }
+
     .main_title {
         font-size: 1.1rem;
     }
@@ -284,17 +306,29 @@
 /* big phone */
 
 @media screen and (max-width:500px) {
+    .components_buttons_space {
+        width: 100%;
+    }
+
+    .title__block {
+        width: 100%;
+        display: grid;
+        place-items: center;
+    }
+
+ 
+    .text_block {
+        width: 100%;
+        display: grid;
+        place-items: center;
+    }
+    
     .staic_text {
         font-size: .6rem;
     }
     .main_title {
         font-size: .8rem;
     }
-}  
-
-/* small phone */
-
-@media screen and (max-width:400px) {
     .staic_text {
         display: none;
     }
@@ -303,5 +337,11 @@
         flex-direction: column;
         gap: .4rem;
         justify-content: center;
+    }
+}  
+
+@media screen and (max-width:375px) {
+    .warning_message {
+        font-size: .9rem;
     }
 }

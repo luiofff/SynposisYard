@@ -74,7 +74,6 @@ function NavBar({check, btn_data, btn_data_href, menu_data_first, menu_data_seco
                     <span className={styles.title_text}>SYproject</span>
                     <a href={menu_data_first_href} className={styles.menu_text}>{menu_data_first}</a>
                     <a href={menu_data_second_href} className={styles.menu_text} onClick={!check ? handleLogout : () => {}}>{menu_data_second}</a>
-                    <AnimatedCubsButton />
                 </div>
             </div>
         </>

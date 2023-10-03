@@ -7,7 +7,7 @@
 
 .navigation_space {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     width: 85%;
     height: 23vh;
@@ -160,6 +160,12 @@
     transition: all .5s;
 }
 
+.warning_message {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color:  var(--purple400);
+}
+
 .plus_icon {
     width: 4vh;
     height: 4vh;
@@ -297,5 +303,14 @@
         flex-direction: column;
         gap: .4rem;
         justify-content: center;
+    }
+    .warning_message {
+        font-size: .9rem;
+    }
+}
+
+@media screen and (max-width:375px) {
+    .warning_message {
+        font-size: .9rem;
     }
 }

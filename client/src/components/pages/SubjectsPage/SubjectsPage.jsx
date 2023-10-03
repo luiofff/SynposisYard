@@ -89,7 +89,6 @@ function MainSpace() {
             <img src={search_ico} className={styles.search_icon} alt="" />
           </div>
         </div>
-        <AnimatedCubsButton />
       </div>
       <div className={`${styles.space}`}>
         <div className={`${styles.add_subject_modal_window} ${!openModal ? styles.add_subject_modal_window_active : ""}`}>
@@ -108,6 +107,7 @@ function MainSpace() {
                         </div>
                     </div>
         </div>
+
         {disciplines &&
           disciplines
             .filter((discipline) => discipline.discipline_title.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -115,7 +115,7 @@ function MainSpace() {
               <Link to={`/disciplines/${discipline.id}`} key={discipline.id} className={styles.card_link}>
                 <Card discipline_title={(discipline.discipline_title).slice(1, -1)} key={discipline.id} />
               </Link>
-            ))}
+        ))}
         <AddNewSubject handleClick={NavToggleOpen} />
       </div>
     </>

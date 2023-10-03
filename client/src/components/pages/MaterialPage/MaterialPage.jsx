@@ -158,19 +158,10 @@ export default function MaterialPage() {
                 menu_data_first_href="/login"
                 menu_data_second_href="/registration"
             />
-            
             <div className={styles.title_block_reference}>
-                <div className={styles.title_block}>
-                    <div className={styles.components_buttons_space}>
-                        <AnimatedCubsButton />
-                        <CardBtn disciplineId={disciplineId} deleteFunc={deleteFunc} editFunc={editFunc}/>
-                    </div>
-                    
-                    <div className={styles.text_title_block}>
-                        <span className={styles.title_text}>{material_title.slice(1, -1)}</span>
-                    </div>
-                </div>
+                <CardBtn deleteFunc={deleteFunc} editFunc={editFunc} pre_title={'материал'} title={(material_title).slice(1, -1)}/>
             </div>
+            
 
             <div className={styles.main_space_reference}>
                 <div className={styles.main_space}>
