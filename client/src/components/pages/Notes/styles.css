@@ -1,0 +1,25 @@
+.yc-table__th-content {
+    font-weight: bold;
+}
+
+.yc-table__cell_edge-padding {
+    border-bottom: 1px solid black;
+}
+
+.yc-table__cell {
+    border-right:1px solid black;
+}
+
+.yc-table__cell:last-child {
+    border-right: none;
+}
+
+.yc-table__actions {
+    background-color: white;
+}
+
+.yc-menu {
+    background-color: black;
+    border-radius: .5rem;
+    color: white;
+}

@@ -91,7 +91,6 @@ export default function DisciplinePage() {
         <div className={styles.settings_block_container}>
           <div className={styles.nav_blocks}>
             <CardBtn  disciplineId={disciplineId} deleteFunc={deleteFunc} editFunc={editFunc}/>
-            
           </div>
           <div className={styles.nav_title}>
             <h1 className={classNames(styles.title, styles.text_of_title)}>{disciplineTitle.slice(1, -1)}</h1>
@@ -106,11 +105,11 @@ export default function DisciplinePage() {
           </Link>
        
 
-        <div className={styles.card}>
-          <div className={styles.title_block}>
-            <h1 className={styles.card__title}>Заметки</h1>
-          </div>
-        </div>
+          <Link to={`notes`} className={styles.card}>
+            <div className={styles.title_block}>
+              <h1 className={styles.card__title}>Заметки</h1>
+            </div>
+          </Link>
       </div>
     </>
   );

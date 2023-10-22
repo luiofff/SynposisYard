@@ -1,0 +1,62 @@
+.modal_window {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 2rem;
+    padding: 2rem;
+    background-color: var(--purple300);
+    opacity: .95;
+    
+}
+
+
+
+.input__block {
+    border-bottom: 2px solid var(--purple400);
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.table_space {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 7rem;
+}
+
+.button_space {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+}
+
+.button_container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1.4px solid var(--purple400);
+    transition: .5s;
+}
+
+.btn:is(:hover, :active) {
+    background-color: var(--purple400);
+    color: #fff;
+}
+
+.tableContainer {
+    max-width: 80%;
+}

@@ -4,6 +4,8 @@
 	border: none;
   overscroll-behavior-y: none;
   overscroll-behavior-x: none;
+  font-family: 'Inter', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 html {

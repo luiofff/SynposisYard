@@ -6,6 +6,7 @@ import SubjectsPage from "../src/components/pages/SubjectsPage/SubjectsPage"
 import DisciplinePage from './components/pages/DisciplinePage/DisciplinePage';
 import TopicsPage from './components/pages/TopicsPage/TopicsPage';
 import AIpage from './components/pages/AIpage/AIpage';
+import Notes from './components/pages/Notes/Notes';
 import MaterialsPage from "./components/pages/MaterialsPage/MaterialsPage"
 import MaterialPage from "./components/pages/MaterialPage/MaterialPage"
 import { Routes,Route } from 'react-router-dom';
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" exact element={<LoginPage />} />
         <Route path="/disciplines" exact element={<SubjectsPage />} />
         <Route path="/disciplines/:disciplineId" exact element={<DisciplinePage />} />
+        <Route path="/disciplines/:disciplineId/notes" exact element={<Notes />} />
         <Route path='/disciplines/:disciplineId/topics' exact element={<TopicsPage />} />
         <Route path='/AI' exact element={<AIpage />} />
         <Route path='/disciplines/:disciplineId/topics/:topicId' exact element={<MaterialsPage/>} />

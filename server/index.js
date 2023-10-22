@@ -328,7 +328,7 @@ app.put("/disciplines/:disciplineId/topics/:topicId/:materialId/updateMaterialDa
   try {
     const { materialId } = req.params;
     const { material_data } = req.body;
-    const updateDiscipline = await pool.query("UPDATE materials SET material_title=$1 WHERE id=$2", [
+    const updateDiscipline = await pool.query("UPDATE materials SET material_data=$1 WHERE id=$2", [
       material_data,materialId
     ]);
     
