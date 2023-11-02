@@ -141,7 +141,7 @@ export default function TopicsPage() {
         })
         .then((res) =>  setMaterials(res.data))
         .catch((err) => console.error(err));
-
+        document.title = "Материалы " + (getTopicTitleJson.topic_title).slice(1, -1);
 
         } catch (error) {
         console.error(error);

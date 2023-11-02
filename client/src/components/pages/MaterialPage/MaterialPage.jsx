@@ -4,13 +4,10 @@ import { useParams } from 'react-router-dom';
 import NavBar from '../../UI/NavBar/NavBar';
 import AddModal from "../../UI/Editpad/Components/AddModal";
 import { useSelector, useDispatch } from 'react-redux'
-import { openModal } from '../../Redux/modalSlice';
+import {Tooltip} from '@gravity-ui/uikit';
 
 import axios from "axios";
 import classNames from 'classnames';
-import pdf_logo from "./assets/pdf_logo.svg"
-import AnimatedCubsButton from '../../UI/buttons/AnimatedCubsButton/AnimatedCubsButton';
-import animationFolder from "./assets/animations/folder.json"
 import test_icon from "./assets/test_icon.svg"
 import animationWarning from "./assets/animations/warning.json"
 import lottie from "lottie-web";
@@ -93,7 +90,7 @@ export default function MaterialPage() {
         });
         const userJsonData = await userResponse.json();
         setUserName(userJsonData.username);
-
+        
     
         
         const getMaterialData = await fetch(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/${materialId}`)
@@ -103,6 +100,7 @@ export default function MaterialPage() {
           const materialJsonData = await getMaterialData.json();
           setMaterial(materialJsonData.material_data);
           setMaterial_title(materialJsonData.material_title);
+          document.title = (materialJsonData.material_title).slice(1, -1);
         } catch (error) {
         console.error(error);
         // Handle the error, e.g., set an error state or display an error message to the user
@@ -135,46 +133,42 @@ export default function MaterialPage() {
 
     return (
         <>
-            <NavBar
-                menu_data_first="Войти"
-                btn_data={userName}
-                btn_data_href="/login"
-                menu_data_second="Регистрация"
-                menu_data_first_href="/login"
-                menu_data_second_href="/registration"
-            />
+            <NavBar/>
             <div className={styles.title_block_reference}>
                 <CardBtn deleteFunc={deleteFunc} editFunc={editFunc} pre_title={'материал'} title={(material_title).slice(1, -1)}/>
             </div>
             
-
+          
             <div className={styles.main_space_reference}>
                 <div className={styles.main_space}>
                     
                     <div className={styles.block_with_mainButtonsCards}>
 
-                        <div className={classNames(styles.card, styles.main_from_text)}>
-                            <div className={classNames(styles.icon_block_reference, styles.pdf_icon_block_reference)}>
-                                <div id="warning" className={styles.icon_warning}></div>
-                            </div>
-                            <div className={styles.title_block_in_card}>
-                                <span style={{color: "#B061FF"}} className={styles.card_title}>Выделить главное</span>
-                            </div>
-                        </div>
-
-                        <div className={classNames(styles.card, styles.test_icon)}>
-                            <div className={classNames(styles.icon_block_reference, styles.pdf_icon_block_reference)}>
-                                <img src={test_icon} className={styles.icon_pdf} alt="" />
-                            </div>
-                            <div className={styles.title_block_in_card}>
-                                <span style={{color: "#38D9E5"}} className={styles.card_title}>Создать тест</span>
-                            </div>
-                        </div>
+                        <Tooltip content="В разработке. Уже скоро добавим!" className={styles.notification_window}>
+                          <div className={classNames(styles.card, styles.main_from_text)}>
+                              <div className={classNames(styles.icon_block_reference, styles.pdf_icon_block_reference)}>
+                                  <div id="warning" className={styles.icon_warning}></div>
+                              </div>
+                              <div className={styles.title_block_in_card}>
+                                  <span style={{color: "#B061FF"}} className={styles.card_title}>Выделить главное</span>
+                              </div>
+                          </div>
+                        </Tooltip>
+                        
+                        <Tooltip content="В разработке. Уже скоро добавим!" className={styles.notification_window}>
+                          <div className={classNames(styles.card, styles.test_icon)}>
+                              <div className={classNames(styles.icon_block_reference, styles.pdf_icon_block_reference)}>
+                                  <img src={test_icon} className={styles.icon_pdf} alt="" />
+                              </div>
+                              <div className={styles.title_block_in_card}>
+                                  <span style={{color: "#38D9E5"}} className={styles.card_title}>Создать тест</span>
+                              </div>
+                          </div>
+                        </Tooltip>
 
                     </div>
                     
-                    
-                
+                                    
 
                     <div className={classNames(styles.block_material)}>
                         <Notepad disciplineId={disciplineId} topicId={topicId} material={material} materialId={materialId}/>

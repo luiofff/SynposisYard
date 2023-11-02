@@ -80,31 +80,45 @@
     grid-template-columns: repeat(4, 10fr);
 }
 
-.add_subject_modal_window {
-    visibility: hidden;
-    opacity: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    width: 100%;
-    background-color: #F3F4F6;
-    transition: all .5s;
-}
-
-.add_subject_modal_window_active {
-    visibility: visible;
-    opacity: 1;
-}
-
-.modal_window_objects {
+.modal_window {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
     align-items: center;
-    gap: 4rem;
+    justify-content: center;
+   
+    width: 30rem;
+    height: 12rem;
+    background-color: var(--purple300);
+    border: 2px solid var(--purple300);
+    border-radius: 1rem;
+}
+
+.input_block {
+    height: 3.5rem;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    border: 2px solid var(--purple300);
+    border-radius: 1.7rem;
+    padding: 0 12px;
+    background-color: #fff;
+}
+
+.input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.add_btn {
+    padding: 1.3rem;
+    font-size: .9rem;
+    font-weight: bold;
+    border-radius: 2rem;
+    color: var(--purple400);
+    background-color: #fff;
 }
 
 .up_array_block {
@@ -164,30 +178,6 @@
 }
 
 
-.input_field::placeholder {color: #b6b6b6;}
-.input_field::-webkit-input-placeholder {color: #b6b6b6;}
-.input_field::-ms-input-placeholder {color: #b6b6b6;}
-.input_field:-moz-placeholder {color: #b6b6b6;opacity: 1;}
-.input_field::-moz-placeholder {color: #b6b6b6;opacity: 1;}
-.input_field:-ms-input-placeholder {color: #b6b6b6;}
-
-.input_block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.input_field {
-    width: 33rem;
-    height: 7vh;
-    border: none;
-}
-
-.input_field {
-    padding: 2rem;
-    font-size: 2rem;
-    color: #D3C3F5;
-    background-color: transparent;
-}
 
 .under_line {
     width: 33rem;
@@ -199,33 +189,8 @@
     .search_bloc {
         width: 80%;
     }
-    .input_field {
-        width: 21rem;
-        height: 10vh;
-        border: none;
-        font-size: 1.3rem;
-    }
-    
-    .under_line {
-        width: 21rem;
-        height: 3px;
-    }
-    
 }
 
-@media screen and (max-width:320px) {
-    .input_field {
-        width: 14rem;
-        height: 10vh;
-        border: none;
-        font-size: 1.3rem;
-    }
-    
-    .under_line {
-        width: 14rem;
-        height: 3px;
-    }
-}
 
 .add_discipline {
     padding: 1.2rem;

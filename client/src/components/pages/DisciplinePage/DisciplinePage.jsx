@@ -40,7 +40,7 @@ export default function DisciplinePage() {
       console.log(disciplineJsonData.discipline_title);
       
       setDisciplineTitle(disciplineJsonData.discipline_title);
-
+      document.title = (disciplineJsonData.discipline_title).slice(1, -1);
     } catch (error) {
       console.error(error);
       // Handle the error, e.g., set an error state or display an error message to the user

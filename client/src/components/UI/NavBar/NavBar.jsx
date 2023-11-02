@@ -5,7 +5,9 @@ import axios from 'axios'
 import lottie from "lottie-web";
 import {DropdownMenu} from '@gravity-ui/uikit';
 
-
+const handleRelocate = () => {
+    window.location.replace("/disciplines"); 
+};
 
 function NavBar() {
     const [userName, setUserName] = useState('');
@@ -66,7 +68,7 @@ function NavBar() {
                         }
                         items={[
                             {
-                                action: () => console.log('Rename'),
+                                action: () => handleRelocate(),
                                 text: 'Дисциплины',
                             },
                             {

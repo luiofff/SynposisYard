@@ -74,22 +74,13 @@ export default function TopicsPage() {
     };
 
     useEffect(() => {
+        document.title = "Темы";
         fetchData();
-
-        
-
     }, [disciplineId]);
 
     return (
         <>
-            <NavBar
-                menu_data_first="Войти"
-                btn_data={userName}
-                btn_data_href="/login"
-                menu_data_second="Регистрация"
-                menu_data_first_href="/login"
-                menu_data_second_href="/registration"
-            />
+            <NavBar />
 
             <div className={styles.navigation_space_block}>
                 <div className={styles.navigation_space}>

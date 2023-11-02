@@ -16,6 +16,12 @@
     justify-content: space-between;
 }
 
+@media screen and (max-height:600px) {
+    .settings_block {
+        height: 20vh;
+    }
+}
+
 .nav_blocks {
     display: grid;
     place-items: center;
