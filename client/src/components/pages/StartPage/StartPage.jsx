@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import animationLogo from "../../UI/NavBar/assets/logo.json"
+import lottie from "lottie-web";
+
 
 // components
 import NavBar from '../../UI/NavBar/NavBar'
@@ -18,9 +21,26 @@ export default function StartPage() {
     
 
 
-  return (
+    useEffect(() => {;
+        lottie.loadAnimation({
+          container: document.querySelector("#logo"),
+          animationData: animationLogo,
+          renderer: "svg", // "canvas", "html"
+          loop: false, // boolean
+          autoplay: true, // boolean
+        });
+      }, []);
+
+    return (
     <>
-        <NavBar menu_data_first={'Войти'} btn_data={'Войти'} btn_data_href={'/login'} menu_data_second={'Регистрация'} menu_data_first_href={"/login"} menu_data_second_href={"/registration"}/>
+        <header className={styles.primary_header}>
+            <div className={styles.navblock}>
+                <div id='logo' className={styles.logo}></div>
+            </div>
+            <div className={styles.navblock}>
+                <a className={styles.nav_btn} href="/login">Войти</a>
+            </div>
+        </header>
         <div className={styles.title_page}>
             <div className={styles.text_button_block}>
                 <div className={styles.text_block}>

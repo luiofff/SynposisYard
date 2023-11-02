@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from "./LoginPage.module.css"
 import NavBar from '../../UI/NavBar/NavBar'
 import hidden_icon from "./assets/hidden_icon.svg"
 import visibility_off from "./assets/visibility_off.svg"
 import classNames from 'classnames';
+import animationLogo from "../../UI/NavBar/assets/logo.json"
+import lottie from "lottie-web";
+
 
 
 export default function AuthPage() {
@@ -65,11 +68,27 @@ export default function AuthPage() {
     }
 
 
+    useEffect(() => {;
+        lottie.loadAnimation({
+          container: document.querySelector("#logo"),
+          animationData: animationLogo,
+          renderer: "svg", // "canvas", "html"
+          loop: false, // boolean
+          autoplay: true, // boolean
+        });
+      }, []);
 
 
     return (
         <>
-            <NavBar menu_data_first={'Регистрация'} btn_data={'Регистрация'} btn_data_href={'/registration'}  menu_data_first_href={"/registration"}/>
+            <header className={styles.primary_header}>
+                <div className={styles.navblock}>
+                    <div id='logo' className={styles.logo}></div>
+                </div>
+                <div className={styles.navblock}>
+                    <a className={styles.nav_btn} href="/registration">Регистрация</a>
+                </div>
+            </header>
             <div className={styles.auth_page}>
                 <div className={styles.title_block}>
                     <h1>Вход</h1>

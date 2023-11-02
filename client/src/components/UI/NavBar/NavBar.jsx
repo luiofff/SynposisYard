@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from "./NavBar.module.css"
-import classNames from 'classnames'
-import logo from "./assets/logo.svg"
 import animationLogo from "./assets/logo.json"
-import close from "./assets/close_FILL0_wght400_GRAD0_opsz48.svg"
 import axios from 'axios'
-import AnimatedCubsButton from "../../UI/buttons/AnimatedCubsButton/AnimatedCubsButton";
-import { Link } from 'react-router-dom';
 import lottie from "lottie-web";
 import {DropdownMenu} from '@gravity-ui/uikit';
 
@@ -18,6 +13,7 @@ function NavBar() {
     const handleLogout = async () => {
         try {
           await axios.get('http://localhost:8080/logout');
+          
         } catch (error) {
           console.error('Error logging out:', error);
         }
@@ -74,7 +70,7 @@ function NavBar() {
                                 text: 'Дисциплины',
                             },
                             {
-                                action: () => console.log('Delete'),
+                                action: () => handleLogout(),
                                 text: 'Выйти'
                             },
                         ]}

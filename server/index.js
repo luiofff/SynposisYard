@@ -79,11 +79,18 @@ app.post('/login', async (req, res) => {
 
 // user logout
 
-app.get('/logout', function (req, res) {
-  res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-  return res.sendStatus(401);
+app.post('/logout', (req, res) => {
+  // Clear the session or token (based on your authentication method)
+  // You can also clear cookies, local storage, etc. here if needed
+  req.session.destroy(err => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).json({ message: 'Failed to log out' });
+    } else {
+      res.status(200).json({ message: 'You are logged out' });
+    }
+  });
 });
-
 // Get user details
 app.get('/user', async (req, res) => {
   try {
