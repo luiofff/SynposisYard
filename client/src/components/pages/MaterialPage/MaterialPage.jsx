@@ -111,21 +111,6 @@ export default function MaterialPage() {
 
     useEffect(() => {
         fetchData();
-        // folder animation settings
-        const animationContainerFolder = document.querySelector("#folder");
-        const animationInstanceFolder = lottie.loadAnimation({
-        container: animationContainerFolder,
-        animationData: animationFolder,
-        loop: false,
-        default: false
-        });
-        animationInstanceFolder.stop();
-        animationContainerFolder.addEventListener("mouseenter", () => {
-        animationInstanceFolder.play();
-        });
-        animationContainerFolder.addEventListener("mouseleave", () => {
-        animationInstanceFolder.stop();
-        });
 
 
 
@@ -167,23 +152,6 @@ export default function MaterialPage() {
                 <div className={styles.main_space}>
                     
                     <div className={styles.block_with_mainButtonsCards}>
-                        <div onClick={() => dispatch(openModal())} className={classNames(styles.card, styles.add_card)}>
-                            <div className={classNames(styles.icon_block_reference, styles.add_icon_block_reference)}>
-                                <div id="folder" className={styles.icon_warning}></div>
-                            </div>
-                            <div className={styles.title_block_in_card}>
-                                <span style={{color: "#1969fe"}} className={styles.card_title}>Добавить</span>
-                            </div>
-                        </div>
-
-                        <div className={classNames(styles.card, styles.pdf_card)}>
-                            <div className={classNames(styles.icon_block_reference, styles.pdf_icon_block_reference)}>
-                                <img src={pdf_logo} className={styles.icon_pdf} alt="" />
-                            </div>
-                            <div className={styles.title_block_in_card}>
-                                <span style={{color: "#ff1c1c"}} className={styles.card_title}>PDF</span>
-                            </div>
-                        </div>
 
                         <div className={classNames(styles.card, styles.main_from_text)}>
                             <div className={classNames(styles.icon_block_reference, styles.pdf_icon_block_reference)}>
@@ -205,9 +173,7 @@ export default function MaterialPage() {
 
                     </div>
                     
-                    <div className={styles.pdfCard_space}>
-                        <PdfCard card_title={"название"}/>
-                    </div>
+                    
                 
 
                     <div className={classNames(styles.block_material)}>

@@ -7,6 +7,8 @@ const pool = require('./db');
 const router = express('router');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+const files = multer({ dest: "./files" });
 
 
 const PORT = process.env.PORT || 8080;
@@ -25,14 +27,6 @@ const checkAuth = (req, res, next) => {
     res.redirect('/');
   }
 };
-
-const storage = multer.memoryStorage();
-
-// Initialize Multer
-const upload = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // Adjust the file size limit as needed
-});
 
 
 // User registration
@@ -85,13 +79,10 @@ app.post('/login', async (req, res) => {
 
 // user logout
 
-app.get("/logout", async (req, res) => {
-  try {
-    req.logout();
-  } catch (err) {
-    console.error(err.message);
-  }
-})
+app.get('/logout', function (req, res) {
+  res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+  return res.sendStatus(401);
+});
 
 // Get user details
 app.get('/user', async (req, res) => {
@@ -415,8 +406,23 @@ app.put("/disciplines/:disciplineId/topics/:topicId/updateMaterial", async (req,
 
 
 
+// Notes queries
 
 
+app.put("/disciplines/:disciplineId/addNote", async (req, res) => {
+  try {
+    const { disciplineId } = req.params;
+    const { note_massive } = req.body;
+
+    const updateMaterialsTitle = await pool.query("INSERT INTO notes (note_massive,  discipline_id) VALUES ($1, $2) RETURNING *", 
+      [note_massive,  disciplineId]
+    );
+
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send('Server error');
+  }
+})
 
 
 // Default error handler

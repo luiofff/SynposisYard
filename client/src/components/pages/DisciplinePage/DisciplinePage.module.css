@@ -5,6 +5,11 @@
     height: 15vh;
 }
 
+.nav_title {
+    display: grid;
+    place-items: center;
+}
+
 .settings_block_container {
     width: 85%;
     display: flex;

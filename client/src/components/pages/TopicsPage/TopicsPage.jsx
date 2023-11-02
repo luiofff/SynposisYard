@@ -42,33 +42,23 @@ export default function TopicsPage() {
         } catch (err) {
           console.error(err.message);
         }
-      };
+    };
 
     const fetchData = async () => {
         try {
-        const token = localStorage.getItem('token');
-        if (!token) return;
+            const token = localStorage.getItem('token');
+            if (!token) return;
 
-        const user_id = JSON.parse(atob(token.split('.')[1])).email;
-
-        const userResponse = await fetch(`http://localhost:8080/user?user_id=${user_id}`, {
-            headers: {
-            Authorization: token,
-            },
-        });
-        const userJsonData = await userResponse.json();
-        setUserName(userJsonData.username);
-
-        const disciplineResponse = await fetch(`http://localhost:8080/disciplines/${disciplineId}`);
-        if (!disciplineResponse.ok) {
-            throw new Error('Discipline not found');
-        }
-        const disciplineJsonData = await disciplineResponse.json();
-        setDisciplineTitle(disciplineJsonData.discipline_title);
+            const disciplineResponse = await fetch(`http://localhost:8080/disciplines/${disciplineId}`);
+            if (!disciplineResponse.ok) {
+                throw new Error('Discipline not found');
+            }
+            const disciplineJsonData = await disciplineResponse.json();
+            setDisciplineTitle(disciplineJsonData.discipline_title);
 
     
         
-        axios.get(`http://localhost:8080/disciplines/${disciplineId}/topics`, {
+            axios.get(`http://localhost:8080/disciplines/${disciplineId}/topics`, {
             headers: {
                 Authorization: token,
             },
@@ -79,7 +69,7 @@ export default function TopicsPage() {
 
         } catch (error) {
         console.error(error);
-        // Handle the error, e.g., set an error state or display an error message to the user
+        
         }
     };
 

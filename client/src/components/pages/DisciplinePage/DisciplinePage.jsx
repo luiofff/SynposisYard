@@ -79,14 +79,7 @@ export default function DisciplinePage() {
 
   return (
     <>
-      <NavBar
-        menu_data_first="Войти"
-        btn_data={userName}
-        btn_data_href="/login"
-        menu_data_second="Регистрация"
-        menu_data_first_href="/login"
-        menu_data_second_href="/registration"
-      />
+      <NavBar/>
       <div className={styles.settings_block}>
         <div className={styles.settings_block_container}>
           <div className={styles.nav_blocks}>

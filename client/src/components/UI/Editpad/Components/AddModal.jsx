@@ -7,43 +7,7 @@ import { closeModal } from '../../../Redux/modalSlice';
 import axios from 'axios';
 
 export default function AddModal({ topicId, materialId, disciplineId }) {
-  const [file, setFile] = useState(null);
-  const [materialTitle, setMaterialTitle] = useState('');
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  const handleUpload = async () => {
-    try {
-      if (!file) {
-        alert('Please select a file.');
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('material_file', file);
-      formData.append('material_title', materialTitle);
-
-      const response = await axios.post(
-        `http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/${materialId}/uploadFile`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-
-      console.log(response.data);
-
-      // Reset file and materialTitle after successful upload
-      setFile(null);
-      setMaterialTitle('');
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const dispatch = useDispatch();
 
@@ -52,6 +16,32 @@ export default function AddModal({ topicId, materialId, disciplineId }) {
   const [active, setActive] = React.useState(2);
   const [close_modal, setClose] = React.useState(true);
   const [material, setMaterial] = React.useState("");
+  const [file, setFile] = useState(null); // State to store the selected file
+
+  const uploadFileToServer = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/${materialId}/uploadFile`,
+        formData
+      );
+
+      // Handle the response as needed
+      console.log(response.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      uploadFileToServer(selectedFile);
+    }
+  };
 
   const toggleClose = () => {
     setClose(!close_modal);
@@ -120,7 +110,7 @@ export default function AddModal({ topicId, materialId, disciplineId }) {
               style={{ display: "none" }}
             />
           </label>
-          <button onClick={handleUpload}>upload</button>
+          <button onClick={uploadFileToServer}>upload</button>
         </div>
       </div>
     </>

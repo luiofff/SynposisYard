@@ -7,6 +7,8 @@ import { useParams} from 'react-router-dom';
 
 const MyTable = withTableActions(Table);
 
+
+
 const data = []
 
 const initialData = [...data];
@@ -23,6 +25,20 @@ function Notes() {
   const [userName, setUserName] = useState('');
   const [disciplineTitle, setDisciplineTitle] = useState('');
   const { disciplineId } = useParams();
+
+  const addData = async () => {
+    try {
+      const body = { note_massive : `"${tableData}"` };
+      const response = await fetch(`http://localhost:8080/disciplines/${disciplineId}/addNote`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+    } catch (err) {
+      console.error(err.message);
+    }
+};
+
 
   const deleteObjectById = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
@@ -47,6 +63,7 @@ function Notes() {
     setEditData({ id: null, task: '' })
     // Close the modal
     setOpen(false);
+    
   };
 
   const handleAddClick = () => {
@@ -61,7 +78,9 @@ function Notes() {
     setEditData({ id: null, task: '' })
     // Close the modal
     setOpen(false);
+    addData();
   };
+
 
   const getRowActions = (row) => {
     return [
