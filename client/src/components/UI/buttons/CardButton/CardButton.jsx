@@ -6,8 +6,9 @@ import lottie from "lottie-web";
 import classNames from "classnames";
 import { useDispatch, useSelector } from 'react-redux'
 import {updateEditData} from "../../../Redux/editDataSlice"
+import {Tooltip} from '@gravity-ui/uikit';
 
-function CardBtn({ deleteFunc, editFunc, pre_title, title }) {
+function CardBtn({ deleteFunc, editFunc, pre_title, title, full_title }) {
   const dispatch = useDispatch();
 
   const editData = useSelector(state => state.editData.editData);
@@ -93,7 +94,9 @@ function CardBtn({ deleteFunc, editFunc, pre_title, title }) {
 
           <div className={styles.text__block}>
             <div className={classNames(styles.pre__title, styles.text)}>{ pre_title }</div>
-            <div className={classNames(styles.__title, styles.text)}>{ title }</div>
+            <Tooltip placement="top" content={full_title.slice(1, -1)}>
+              <div  className={classNames(styles.__title, styles.text)}>{ title }</div>
+            </Tooltip>
           </div>
 
         </div>

@@ -41,7 +41,7 @@ export default function MaterialPage() {
     const [modalOpen, setmodalOpen] = useState(true);
     const [material, setMaterial] = useState("");
     const [material_title, setMaterial_title] = useState("");
-    
+    const [titleTooltip, setTitleTooltip] = useState("")
     // functions for delete and edit buttons
 
     const editData = useSelector(state => state.editData.editData)
@@ -99,8 +99,15 @@ export default function MaterialPage() {
           }
           const materialJsonData = await getMaterialData.json();
           setMaterial(materialJsonData.material_data);
-          setMaterial_title(materialJsonData.material_title);
+          setTitleTooltip(materialJsonData.material_title);
+          
           document.title = (materialJsonData.material_title).slice(1, -1);
+          if ((materialJsonData.material_title).length >= 23) {
+            setMaterial_title((materialJsonData.material_title).slice(0, 23) + "...")
+          } else {
+              setMaterial_title(materialJsonData.material_title)
+          }
+        
         } catch (error) {
         console.error(error);
         // Handle the error, e.g., set an error state or display an error message to the user
@@ -135,7 +142,7 @@ export default function MaterialPage() {
         <>
             <NavBar/>
             <div className={styles.title_block_reference}>
-                <CardBtn deleteFunc={deleteFunc} editFunc={editFunc} pre_title={'материал'} title={(material_title).slice(1, -1)}/>
+                <CardBtn deleteFunc={deleteFunc} editFunc={editFunc} pre_title={'материал'} title={(material_title).slice(1, -1)}  full_title={titleTooltip}/>
             </div>
             
           

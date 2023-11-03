@@ -9,6 +9,7 @@ import SubscriptionElement from '../../UI/buttons/SubscriptionElement/Subscripti
 import {  useSelector } from 'react-redux'
 import axios from "axios"
 import {Modal} from '@gravity-ui/uikit';
+import CardBtn from '../../UI/buttons/CardButton/CardButton';
 
 export default function TopicsPage() {
 
@@ -20,7 +21,7 @@ export default function TopicsPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [open, setOpen] = React.useState(false);
     const [newMaterial, setNewMaterial] = useState("");
-    
+    const [titleTooltip, setTitleTooltip] = useState("")
 
     const editData = useSelector(state => state.editData.editData)
 
@@ -29,6 +30,7 @@ export default function TopicsPage() {
           const deleteDiscipline = await fetch(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/deleteTitle`, {
             method: "DELETE"
           });
+          window.history.go(-1)
         } catch (err) {
           console.error(err.message);
         }
@@ -36,11 +38,10 @@ export default function TopicsPage() {
 
     const editFunc = async () => {
         try {
-          console.log(editData)
           const updateDiscipline = await axios.put(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/updateTitle`, {
             topic_title: JSON.stringify(editData)
           });
-    
+          window.location.reload();
           
         } catch (err) {
           console.error(err.message);
@@ -84,7 +85,13 @@ export default function TopicsPage() {
 
         const getTopicTitle = await fetch(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/getuniq`);
         const getTopicTitleJson = await getTopicTitle.json();
-        setMaterial_title(getTopicTitleJson.topic_title)
+        setTitleTooltip(getTopicTitleJson.topic_title)
+        if ((getTopicTitleJson.topic_title).length >= 23) {
+            setMaterial_title((getTopicTitleJson.topic_title).slice(0, 23) + "...")
+        } else {
+            setMaterial_title(getTopicTitleJson.topic_title)
+        }
+        
 
      
 
@@ -126,19 +133,14 @@ export default function TopicsPage() {
                 </form>
             </Modal>
 
-            <div className={styles.navigation_space_block}>
-                <div className={styles.navigation_space}>
-
-                    <div className={styles.title__block}>
-                        <div className={styles.text_block}>
-                            <span className={classNames(styles.text, styles.staic_text)}>Материалы по теме:</span>
-                        </div>
-                        <div className={styles.text_block}>
-                            <h1 className={classNames(styles.text, styles.main_title)}>{(material_title).slice(1, -1)}</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <CardBtn 
+                disciplineId={disciplineId} 
+                deleteFunc={deleteFunc} 
+                editFunc={editFunc} 
+                title={material_title.slice(1, -1)} 
+                full_title={titleTooltip}
+                pre_title={"Материалы по теме:"}
+            />
 
             <div className={styles.line_block}>
                 <div className={styles.line}></div>
@@ -178,7 +180,7 @@ export default function TopicsPage() {
                                         </Link>
                                     ))
                                 ) : (
-                                    <p onClick={() => setOpen(false)} className={styles.warning_message}>Здесь пока ничего нет...</p>
+                                    <p onClick={() => setOpen(true)} className={styles.warning_message}>Здесь пока ничего нет...</p>
                                 )}
                         
                         

@@ -75,6 +75,13 @@
     width: 80%;
 }
 
+.main_title {
+    width: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
 .block_material {
     width: 95%;
     font-size: large;
@@ -121,14 +128,7 @@
     }
 }
 
-.text {
-    width: 100%;
-    white-space: pre-wrap;       /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    word-wrap: break-word; 
-}
+
 
 
 

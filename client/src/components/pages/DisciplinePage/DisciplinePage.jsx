@@ -38,9 +38,8 @@ export default function DisciplinePage() {
       }
       const disciplineJsonData = await disciplineResponse.json();
       console.log(disciplineJsonData.discipline_title);
-      
+      document.title = disciplineJsonData.discipline_title.slice(1, -1);
       setDisciplineTitle(disciplineJsonData.discipline_title);
-      document.title = (disciplineJsonData.discipline_title).slice(1, -1);
     } catch (error) {
       console.error(error);
       // Handle the error, e.g., set an error state or display an error message to the user
@@ -49,12 +48,12 @@ export default function DisciplinePage() {
 
   const editFunc = async () => {
     try {
-      console.log(editData)
+      
       const updateDiscipline = await axios.put(`http://localhost:8080/disciplines/${disciplineId}/update`, {
         disciplineTilte: JSON.stringify(editData)
       });
-
       
+      window.location.reload();
     } catch (err) {
       console.error(err.message);
     }
@@ -83,7 +82,7 @@ export default function DisciplinePage() {
       <div className={styles.settings_block}>
         <div className={styles.settings_block_container}>
           <div className={styles.nav_blocks}>
-            <CardBtn  disciplineId={disciplineId} deleteFunc={deleteFunc} editFunc={editFunc}/>
+            <CardBtn  disciplineId={disciplineId} deleteFunc={deleteFunc} editFunc={editFunc} full_title={disciplineTitle}/>
           </div>
           <div className={styles.nav_title}>
             <h1 className={classNames(styles.title, styles.text_of_title)}>{disciplineTitle.slice(1, -1)}</h1>
