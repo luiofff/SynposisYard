@@ -1,0 +1,12 @@
+.yc-menu {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 1.2rem;
+    
+    font-weight: bold;
+    color: #111;
+    border: 1px solid var(--purple400);
+}
+

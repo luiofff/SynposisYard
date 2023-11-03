@@ -9,7 +9,7 @@ import AnimatedCubsButton from '../../UI/buttons/AnimatedCubsButton/AnimatedCubs
 import SubscriptionElement from '../../UI/buttons/SubscriptionElement/SubscriptionElement';
 import close from "./assets/cancel_FILL0_wght400_GRAD0_opsz48.svg"
 import axios from "axios"
-
+import {Modal} from '@gravity-ui/uikit';
 
 export default function TopicsPage() {
 
@@ -17,14 +17,10 @@ export default function TopicsPage() {
     const [userName, setUserName] = useState('');
     const { disciplineId } = useParams();
     const [disciplineTitle, setDisciplineTitle] = useState('');
-    const [modalOpen, setmodalOpen] = useState(true);
+    const [open, setOpen] = React.useState(false);
     const [topics, setTopics] = useState([]);
     const [topic_title , setTopic_title ] = useState("");
 
-
-    const toggleOpen = () => {
-        setmodalOpen(!modalOpen)
-    }
 
     const onSubmitForm = async (e) => {
         
@@ -37,7 +33,6 @@ export default function TopicsPage() {
             body: JSON.stringify(body)
           });
           setTopic_title("");
-          setmodalOpen(!modalOpen)
           window.location.reload();
         } catch (err) {
           console.error(err.message);
@@ -81,6 +76,20 @@ export default function TopicsPage() {
     return (
         <>
             <NavBar />
+            <Modal open={open} onClose={() => setOpen(false)}>
+                <form onSubmit={onSubmitForm} className={styles.modal_window}>
+                <div className={styles.input_block_modal}>
+                    <input type="text"
+                    onChange={(e) => setTopic_title(e.target.value)}
+                    className={styles.input_modal}
+                    placeholder='Название...'
+                    />
+                </div>
+                <button type="submit" className={styles.add_btn} onClick={() => setOpen(false)}>
+                    Добавить
+                </button>
+                </form>
+            </Modal>
 
             <div className={styles.navigation_space_block}>
                 <div className={styles.navigation_space}>
@@ -109,7 +118,7 @@ export default function TopicsPage() {
                                 <img src={search_icon} className={styles.icon_search} alt="" />
                             </button>
                         </div>
-                        <button className={styles.add_button} onClick={toggleOpen}>
+                        <button className={styles.add_button} onClick={() => setOpen(true)}>
                             <img src={plus_icon} className={styles.plus_icon} alt="" />
                             <span className={styles.add_btn_text}>Добавить</span>
                         </button>
@@ -127,29 +136,14 @@ export default function TopicsPage() {
                                     </Link>   
                             ))) 
                             :
-                            (<p onClick={toggleOpen} className={styles.warning_message}>Здесь пока ничего нет...</p>)
+                            (<p onClick={() => setOpen(true)} className={styles.warning_message}>Здесь пока ничего нет...</p>)
                         }
                         
                         
                         
                     </ul>
                 </div>
-
-
-                <div className={`${styles["dialog_window_back"]} ${!modalOpen ? styles.active : ""}`}>
-                        <div className={styles.modal_navbar}>
-                            <img src={close} onClick={toggleOpen} className={styles.close_icon} alt="" />
-                        </div>
-                        <form onSubmit={onSubmitForm} className={styles.input_block}>
-                                <input type="text" onChange={e => setTopic_title(e.target.value)} placeholder="Название (макс. 25 символов)" value={topic_title}  className={styles.input}/>
-                                <button type='submit' className={styles.icon_search_block}>
-                                    <img src={plus_icon} className={styles.icon_search} alt="" />
-                                </button>
-
-                        </form>
-                </div>
             </div>
-
         </>
     )
 }

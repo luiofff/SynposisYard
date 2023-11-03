@@ -4,6 +4,7 @@ import animationLogo from "./assets/logo.json"
 import axios from 'axios'
 import lottie from "lottie-web";
 import {DropdownMenu} from '@gravity-ui/uikit';
+import "./style.css"
 
 const handleRelocate = () => {
     window.location.replace("/disciplines"); 
@@ -76,6 +77,7 @@ function NavBar() {
                                 text: 'Выйти'
                             },
                         ]}
+                        className={styles.menu}
                     />
                 </div>
             </header>

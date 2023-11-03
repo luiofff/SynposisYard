@@ -1,56 +1,14 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import NavBar from '../../UI/NavBar/NavBar';
 import classNames from 'classnames';
 import plus_icon from "../TopicsPage/assets/add_topic_icon.svg"
 import search_icon from "../SubjectsPage/assets/search_icon.svg";
 import styles from "./MaterialsPage.module.css"
-import AnimatedCubsButton from '../../UI/buttons/AnimatedCubsButton/AnimatedCubsButton';
 import SubscriptionElement from '../../UI/buttons/SubscriptionElement/SubscriptionElement';
-import close from "../TopicsPage/assets/cancel_FILL0_wght400_GRAD0_opsz48.svg"
-import axios from "axios"
-import CardBtn from '../../UI/buttons/CardButton/CardButton';
 import {  useSelector } from 'react-redux'
-
-
-const SearchQueryContext = createContext();
-const OpenModalContext = createContext();
-
-const PageActions = () => {
-    const [searchQuery, setSearchQuery] = useContext(SearchQueryContext);
-    const [modalOpen, setmodalOpen] = useContext(OpenModalContext);
-
-    const handleSearchInputChange = (e) => {
-        setSearchQuery(e.target.value); 
-    };
-
-    const handeleOpen = () => {
-        setmodalOpen(!modalOpen)
-    }
-
-    return (
-        <>
-            <div className={styles.main_input_block}>
-                <div className={styles.input_block}>
-
-                    <input 
-                        type="text" 
-                        onChange={handleSearchInputChange}  
-                        className={styles.input}
-                    />
-
-                    <button className={styles.icon_search_block}>
-                        <img src={search_icon} className={styles.icon_search} alt="" />
-                    </button>
-                </div>
-                <button className={styles.add_button} onClick={handeleOpen}>
-                    <img src={plus_icon} className={styles.plus_icon} alt="" />
-                    <span className={styles.add_btn_text}>Добавить</span>
-                </button>
-            </div>
-        </>
-    );
-}
+import axios from "axios"
+import {Modal} from '@gravity-ui/uikit';
 
 export default function TopicsPage() {
 
@@ -60,9 +18,9 @@ export default function TopicsPage() {
     const [materials, setMaterials] = useState([]);
     const [material_title, setMaterial_title] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
-    const [modalOpen, setModalOpen] = useState(true); 
-
-    // functions for delete and edit buttons
+    const [open, setOpen] = React.useState(false);
+    const [newMaterial, setNewMaterial] = useState("");
+    
 
     const editData = useSelector(state => state.editData.editData)
 
@@ -91,22 +49,18 @@ export default function TopicsPage() {
 
     // ________________________________________
 
-    const handleModalToggle = () => {
-        setModalOpen(!modalOpen);
-    }
-
     const onSubmitForm = async (e) => {
         e.preventDefault();
         try {
-          const content = `"${material_title}"`
+          const content = `"${newMaterial}"`
           const body = { material_title: content };
           const response = await fetch(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/addmaterial`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
           });
-          setMaterial_title("");
-          setModalOpen(!modalOpen)
+          setNewMaterial("");
+          setOpen(false)
           window.location.reload();
         } catch (err) {
           console.error(err.message);
@@ -130,7 +84,7 @@ export default function TopicsPage() {
 
         const getTopicTitle = await fetch(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/getuniq`);
         const getTopicTitleJson = await getTopicTitle.json();
-        setTopicTitle(getTopicTitleJson.topic_title)
+        setMaterial_title(getTopicTitleJson.topic_title)
 
      
 
@@ -150,37 +104,64 @@ export default function TopicsPage() {
     };
 
     useEffect(() => {
+        document.title = "Темы";
         fetchData();
     }, [disciplineId]);
 
     return (
-        <SearchQueryContext.Provider value={[searchQuery, setSearchQuery]}>
-            <OpenModalContext.Provider value={[modalOpen, handleModalToggle]}>
-                <>
-                    <NavBar
-                        menu_data_first="Войти"
-                        btn_data={userName}
-                        btn_data_href="/login"
-                        menu_data_second="Регистрация"
-                        menu_data_first_href="/login"
-                        menu_data_second_href="/registration"
+        <>
+            <NavBar />
+            <Modal open={open} onClose={() => setOpen(false)}>
+                <form onSubmit={onSubmitForm} className={styles.modal_window}>
+                <div className={styles.input_block_modal}>
+                    <input type="text"
+                    onChange={(e) => setNewMaterial(e.target.value)}
+                    className={styles.input_modal}
+                    placeholder='Название...'
                     />
+                </div>
+                <button type="submit" className={styles.add_btn} onClick={() => setOpen(false)}>
+                    Добавить
+                </button>
+                </form>
+            </Modal>
 
-                    
-                    <CardBtn deleteFunc={deleteFunc} editFunc={editFunc} pre_title={'Материалы по теме'} title={(topic_title).slice(1, -1)}/>
-                    
+            <div className={styles.navigation_space_block}>
+                <div className={styles.navigation_space}>
 
-                    <div className={styles.line_block}>
-                        <div className={styles.line}></div>
+                    <div className={styles.title__block}>
+                        <div className={styles.text_block}>
+                            <span className={classNames(styles.text, styles.staic_text)}>Материалы по теме:</span>
+                        </div>
+                        <div className={styles.text_block}>
+                            <h1 className={classNames(styles.text, styles.main_title)}>{(material_title).slice(1, -1)}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.line_block}>
+                <div className={styles.line}></div>
+            </div>
+            
+            <div className={styles.main_space}>
+                <div className={styles.space}>
+                    <div className={styles.main_input_block}>
+                        <div className={styles.input_block}>
+                            <input type="text" require onChange={e => setSearchQuery(e.target.value)}  className={styles.input}/>
+                            <button className={styles.icon_search_block}>
+                                <img src={search_icon} className={styles.icon_search} alt="" />
+                            </button>
+                        </div>
+                        <button className={styles.add_button} onClick={() => setOpen(true)}>
+                            <img src={plus_icon} className={styles.plus_icon} alt="" />
+                            <span className={styles.add_btn_text}>Добавить</span>
+                        </button>
                     </div>
                     
-                    <div className={styles.main_space}>
-                        <div className={styles.space}>
+                    <ul className={styles.ul_list}>
 
-                            <PageActions />
-                            
-                            <ul className={styles.ul_list}>
-                                {materials.length > 0 ? (
+                            {materials.length > 0 ? (
                                     materials
                                     .filter((material) =>
                                         material.material_title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -197,27 +178,14 @@ export default function TopicsPage() {
                                         </Link>
                                     ))
                                 ) : (
-                                    <p onClick={handleModalToggle} className={styles.warning_message}>Здесь пока ничего нет...</p>
+                                    <p onClick={() => setOpen(false)} className={styles.warning_message}>Здесь пока ничего нет...</p>
                                 )}
-                            </ul>
-                        </div>
-
-
-                        <div className={`${styles["dialog_window_back"]} ${!modalOpen ? styles.active : ""}`}>
-                                <div className={styles.modal_navbar}>
-                                    <img src={close} onClick={handleModalToggle} className={styles.close_icon} alt="" />
-                                </div>
-                                <form onSubmit={onSubmitForm} className={styles.input_block}>
-                                        <input type="text" onChange={e => setMaterial_title(e.target.value)} placeholder="Название (макс. 25 символов)" value={material_title}  className={styles.input}/>
-                                        <button type='submit' className={styles.icon_search_block}>
-                                            <img src={plus_icon} className={styles.icon_search} alt="" />
-                                        </button>
-                                </form>
-                        </div>
-                    </div>
-
-                </>
-            </OpenModalContext.Provider>
-        </SearchQueryContext.Provider>
+                        
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        </>
     )
 }

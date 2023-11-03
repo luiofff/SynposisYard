@@ -5,12 +5,9 @@ import AddNewSubject from "../../UI/Cards/AddNewSubject/AddNewSubject";
 import styles from "./SubjectsPage.module.css";
 import Card from "../../UI/Cards/MainCard/Card";
 import search_ico from "./assets/search_icon.svg";
-import AnimatedCubsButton from "../../UI/buttons/AnimatedCubsButton/AnimatedCubsButton";
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux'
-import {updateEditData} from "../../Redux/editDataSlice"
 import {Modal} from '@gravity-ui/uikit';
-import {Plus} from '@gravity-ui/icons';
+
 
 function MainSpace() {
 

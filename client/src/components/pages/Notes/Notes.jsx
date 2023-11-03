@@ -85,14 +85,14 @@ function Notes() {
   const getRowActions = (row) => {
     return [
       {
-        text: 'Edit',
+        text: 'Редактировать',
         handler: () => {
           setEditData({ id: row.id, task: row.task });
           setOpen(true);
         },
       },
       {
-        text: 'Remove',
+        text: 'Удалить',
         handler: () => {
           deleteObjectById(row.id);
         },
@@ -168,11 +168,11 @@ function Notes() {
             />
             {editData.id ? ( // If editData.id is set, show the "Edit" button
               <Button onClick={handleEditClick} size="xl">
-                Edit
+                Редактировать
               </Button>
             ) : ( // Otherwise, show the "Add" button
               <Button onClick={handleAddClick} size="xl">
-                Add
+                Добавить
               </Button>
             )}
           </div>

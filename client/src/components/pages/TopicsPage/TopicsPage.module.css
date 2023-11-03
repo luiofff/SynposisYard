@@ -1,3 +1,50 @@
+/* modal */
+.modal_window {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+   
+    width: 30rem;
+    height: 12rem;
+    background-color: var(--purple300);
+    border: 2px solid var(--purple300);
+    border-radius: 1rem;
+}
+
+.input_block_modal {
+    height: 3.5rem;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    border: 2px solid var(--purple300);
+    border-radius: 1.7rem;
+    padding: 0 12px;
+    background-color: #fff;
+}
+
+.input_modal {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.add_btn {
+    padding: 1.3rem;
+    font-size: .9rem;
+    font-weight: bold;
+    border-radius: 2rem;
+    color: var(--purple400);
+    background-color: #fff;
+}
+
+/* modal */
+
+
+
+
 .navigation_space_block {
     width: 100%;
     height: 23vh;

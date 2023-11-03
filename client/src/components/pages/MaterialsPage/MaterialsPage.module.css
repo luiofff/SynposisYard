@@ -1,3 +1,50 @@
+/* modal */
+.modal_window {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+   
+    width: 30rem;
+    height: 12rem;
+    background-color: var(--purple300);
+    border: 2px solid var(--purple300);
+    border-radius: 1rem;
+}
+
+.input_block_modal {
+    height: 3.5rem;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    border: 2px solid var(--purple300);
+    border-radius: 1.7rem;
+    padding: 0 12px;
+    background-color: #fff;
+}
+
+.input_modal {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.add_btn {
+    padding: 1.3rem;
+    font-size: .9rem;
+    font-weight: bold;
+    border-radius: 2rem;
+    color: var(--purple400);
+    background-color: #fff;
+}
+
+/* modal */
+
+
+
+
 .navigation_space_block {
     width: 100%;
     height: 23vh;
@@ -7,16 +54,10 @@
 
 .navigation_space {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     width: 85%;
     height: 23vh;
-}
-
-.components_buttons_space {
-    width: 50%;
-    display: flex;
-    gap: 4rem;
 }
 
 .title__block {
@@ -166,6 +207,12 @@
     transition: all .5s;
 }
 
+.warning_message {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color:  var(--purple400);
+}
+
 .plus_icon {
     width: 4vh;
     height: 4vh;
@@ -235,24 +282,11 @@
     transform: rotate(180deg);
 }
 
-.warning_message {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color:  var(--purple400);
-}
-
 /* adapt */
 
+/* tab */
+
 @media screen and (max-width:768px) {
-
-    .components_buttons_space {
-        width: 70%;
-    }
-
-    .title__block {
-        width: 30%;
-    }
-
     .main_title {
         font-size: 1.4rem;
     }
@@ -289,15 +323,6 @@
 /* mini tab */
 
 @media screen and (max-width:620px) {
-
-    .components_buttons_space {
-        width: 60%;
-    }
-
-    .title__block {
-        width: 40%;
-    }
-
     .main_title {
         font-size: 1.1rem;
     }
@@ -306,29 +331,17 @@
 /* big phone */
 
 @media screen and (max-width:500px) {
-    .components_buttons_space {
-        width: 100%;
-    }
-
-    .title__block {
-        width: 100%;
-        display: grid;
-        place-items: center;
-    }
-
- 
-    .text_block {
-        width: 100%;
-        display: grid;
-        place-items: center;
-    }
-    
     .staic_text {
         font-size: .6rem;
     }
     .main_title {
         font-size: .8rem;
     }
+}  
+
+/* small phone */
+
+@media screen and (max-width:400px) {
     .staic_text {
         display: none;
     }
@@ -338,7 +351,10 @@
         gap: .4rem;
         justify-content: center;
     }
-}  
+    .warning_message {
+        font-size: .9rem;
+    }
+}
 
 @media screen and (max-width:375px) {
     .warning_message {
