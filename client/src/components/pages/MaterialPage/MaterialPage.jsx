@@ -62,10 +62,10 @@ export default function MaterialPage() {
           const updateDiscipline = await axios.put(`http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/${materialId}/updateMaterialData`, {
             material_data: JSON.stringify(editData)
           });
-    
+          console.log("confirm")
           
         } catch (err) {
-          console.error(err.message);
+          console.log(err);
         }
       }
 

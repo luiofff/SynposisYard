@@ -28,18 +28,21 @@ function Notes() {
 
   const addData = async () => {
     try {
-      const body = { note_massive : `"${tableData}"` };
-      const response = await fetch(`http://localhost:8080/disciplines/${disciplineId}/addNote`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
+      const data = tableData[0];
+      console.log(data)
+      const body = { data, disciplineId };
+      const response = await fetch('http://localhost:8080/addNote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
       });
     } catch (err) {
       console.error(err.message);
     }
-};
-
-
+  };
+  
   const deleteObjectById = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
@@ -79,6 +82,7 @@ function Notes() {
     // Close the modal
     setOpen(false);
     addData();
+    console.log(tableData);
   };
 
 

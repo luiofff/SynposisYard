@@ -326,7 +326,7 @@ app.put("/disciplines/:disciplineId/topics/:topicId/:materialId/updateMaterialDa
   try {
     const { materialId } = req.params;
     const { material_data } = req.body;
-    const updateDiscipline = await pool.query("UPDATE materials SET material_data=$1 WHERE id=$2", [
+    const updateDiscipline = await pool.query("UPDATE materials SET material_title=$1 WHERE id=$2", [
       material_data,materialId
     ]);
     
@@ -415,21 +415,25 @@ app.put("/disciplines/:disciplineId/topics/:topicId/updateMaterial", async (req,
 
 // Notes queries
 
-
-app.put("/disciplines/:disciplineId/addNote", async (req, res) => {
+app.post('/addNote', async (req, res) => {
   try {
-    const { disciplineId } = req.params;
-    const { note_massive } = req.body;
+    const { note, disciplineId } = req.body;
 
-    const updateMaterialsTitle = await pool.query("INSERT INTO notes (note_massive,  discipline_id) VALUES ($1, $2) RETURNING *", 
-      [note_massive,  disciplineId]
-    );
+    const insertNoteQuery = {
+      text: 'INSERT INTO notes (discipline_id, note) VALUES ($1, $2) RETURNING *',
+      values: [disciplineId, note],
+    };
 
+    const result = await pool.query(insertNoteQuery);
+
+    res.status(201).json(result.rows[0]);
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
     res.status(500).send('Server error');
   }
-})
+});
+
+
 
 
 // Default error handler
