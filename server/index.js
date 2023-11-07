@@ -336,6 +336,20 @@ app.put("/disciplines/:disciplineId/topics/:topicId/:materialId/updateMaterialDa
   }
 });
 
+app.put("/disciplines/:disciplineId/topics/:topicId/:materialId/updateMaterialDataAll", async (req, res) => {
+  try {
+    const { materialId } = req.params;
+    const { material_data } = req.body;
+    const updateDiscipline = await pool.query("UPDATE materials SET material_data=$1 WHERE id=$2", [
+      material_data,materialId
+    ]);
+    
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
 
 
 // delete and edit materials page functions

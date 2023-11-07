@@ -65,7 +65,7 @@ function Notepad({topicId, materialId, disciplineId}) {
     try {
       const updateMaterialData = saveMaterial();
       const updateDiscipline = await axios.put(
-          `http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/${materialId}/updateMaterialData`,
+          `http://localhost:8080/disciplines/${disciplineId}/topics/${topicId}/${materialId}/updateMaterialDataAll`,
           {
             material_data: updateMaterialData,
           }

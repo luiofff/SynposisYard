@@ -40,6 +40,11 @@
 .username {
     font-size: 1.4rem;
     font-weight: 200;
+    transition: .3s;
+}
+
+.username:is(:active, :hover, :focus) {
+    color: var(--blue300);
 }
 
 @media screen and (max-width:768px) {

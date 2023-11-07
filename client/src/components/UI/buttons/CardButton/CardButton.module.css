@@ -202,7 +202,22 @@
         .edit__icon:is(:hover, :active, :focus) .input__line {
             width: 190%;
         }
+
+        .__title {
+            font-size: .5rem;
+        }
     }
 }
 
 
+@media screen and (max-width:1145px) {
+    .__title {
+        font-size: 1.2rem;
+    }
+
+    @media screen and (max-width:820px) {
+        .__title {
+            font-size: .95rem;
+        }
+    }
+}

@@ -31,6 +31,9 @@
     font-size: 1.2rem;
     color: var(--purple400);
 }
+.nav_btn:is(:hover, :focus, :active) {
+    color: var(--blue300);
+}
 
 .auth_page {
     width: 100%;

@@ -32,6 +32,10 @@
     color: var(--purple400);
 }
 
+.nav_btn:is(:hover, :focus, :active) {
+    color: var(--blue300);
+}
+
 .title_page {
     display: grid;
     place-items: center;
