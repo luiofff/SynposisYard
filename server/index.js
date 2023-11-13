@@ -429,12 +429,13 @@ app.put("/disciplines/:disciplineId/topics/:topicId/updateMaterial", async (req,
 
 // Notes queries
 
-app.post('/addNote', async (req, res) => {
+app.post('/disciplines/:disciplineId/addNote', async (req, res) => {
   try {
     const { note, disciplineId } = req.body;
 
     const insertNoteQuery = {
-      text: 'INSERT INTO notes (discipline_id, note) VALUES ($1, $2) RETURNING *',
+      text: 'INSERT INTO notes (discipline_id, note) VALUES ($1, ARRAY[$2]) RETURNING *',
+
       values: [disciplineId, note],
     };
 
@@ -447,6 +448,57 @@ app.post('/addNote', async (req, res) => {
   }
 });
 
+app.post('/disciplines/:disciplineId/updateNote', async (req, res) => {
+  try {
+    const { note, disciplineId } = req.body;
+
+
+    const startQuery = {
+      text: 'INSERT INTO notes (discipline_id, note) VALUES ($1, ARRAY[$2]) RETURNING *',
+
+      values: [disciplineId, []],
+    };
+
+    const startQueryActivate = await pool.query(startQuery);
+
+    const insertNoteQuery = {
+      text: 'UPDATE notes SET note=$1 WHERE discipline_id = $2',
+      values: [note, disciplineId],
+    };
+
+    const result = await pool.query(insertNoteQuery);
+
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+app.get('/disciplines/:disciplineId/getNotes', async (req, res) => {
+  try {
+    const { disciplineId } = req.params; // Corrected variable name
+
+    // Assuming 'заметки' is the name of your table
+    const responseNotes = await pool.query('SELECT note FROM notes WHERE discipline_id = $1', [disciplineId]);
+
+    const notes = responseNotes.rows.map(row => row.note);
+    arr = notes[0][0]
+    const cleanedString = arr.replace(/{{|}}|"/g, '');
+
+    // Split the string using commas
+    const array = cleanedString.split(',');
+
+    res.send(array);
+
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+
 
 
 
@@ -457,3 +509,5 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = router;
+
+
