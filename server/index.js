@@ -429,49 +429,32 @@ app.put("/disciplines/:disciplineId/topics/:topicId/updateMaterial", async (req,
 
 // Notes queries
 
-app.post('/disciplines/:disciplineId/addNote', async (req, res) => {
+app.post('/disciplines/:disciplineId/addOrUpdateNote', async (req, res) => {
+  const { discipline_id, note } = req.body;
+
   try {
-    const { note, disciplineId } = req.body;
+    const checkResult = await pool.query('SELECT * FROM notes WHERE discipline_id = $1', [discipline_id]);
 
-    const insertNoteQuery = {
-      text: 'INSERT INTO notes (discipline_id, note) VALUES ($1, ARRAY[$2]) RETURNING *',
+    if (checkResult.rows.length === 0) {
+      // No record found, insert a new note
+      const insertResult = await pool.query(
+        'INSERT INTO notes (discipline_id, note) VALUES ($1, $2) RETURNING *',
+        [discipline_id, note]
+      );
 
-      values: [disciplineId, note],
-    };
+      res.json({ action: 'insert', result: insertResult.rows[0] });
+    } else {
+      // Record found, update the existing note
+      const updateResult = await pool.query(
+        'UPDATE notes SET note = $1 WHERE discipline_id = $2 RETURNING *',
+        [note, discipline_id]
+      );
 
-    const result = await pool.query(insertNoteQuery);
-
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
-  }
-});
-
-app.post('/disciplines/:disciplineId/updateNote', async (req, res) => {
-  try {
-    const { note, disciplineId } = req.body;
-
-
-    const startQuery = {
-      text: 'INSERT INTO notes (discipline_id, note) VALUES ($1, ARRAY[$2]) RETURNING *',
-
-      values: [disciplineId, []],
-    };
-
-    const startQueryActivate = await pool.query(startQuery);
-
-    const insertNoteQuery = {
-      text: 'UPDATE notes SET note=$1 WHERE discipline_id = $2',
-      values: [note, disciplineId],
-    };
-
-    const result = await pool.query(insertNoteQuery);
-
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
+      res.json({ action: 'update', result: updateResult.rows[0] });
+    }
+  } catch (error) {
+    console.error('Error adding or updating note:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -483,13 +466,9 @@ app.get('/disciplines/:disciplineId/getNotes', async (req, res) => {
     const responseNotes = await pool.query('SELECT note FROM notes WHERE discipline_id = $1', [disciplineId]);
 
     const notes = responseNotes.rows.map(row => row.note);
-    arr = notes[0][0]
-    const cleanedString = arr.replace(/{{|}}|"/g, '');
+    
 
-    // Split the string using commas
-    const array = cleanedString.split(',');
-
-    res.send(array);
+    res.send(notes);
 
   } catch (error) {
     console.error(error.message);

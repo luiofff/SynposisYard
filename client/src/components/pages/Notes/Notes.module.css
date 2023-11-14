@@ -26,7 +26,8 @@
 
 .list_nav_block {
     display: flex;
-    gap: 1.5rem;
+
+    gap: 3rem;
 }
 
 .trash_ico {
@@ -42,15 +43,18 @@
 
 .modal {
     padding: 2rem;
-    background-color: red;
+    background-color: #fff;
+    border: 1px solid var(--purple300);
+    border-radius: 2rem;
 }
 
 .input_block {
     width: 20rem;
     height: 3rem;
     padding: 12px;
-    border-radius: 2rem;
-    background-color: green;
+    border-radius: 1rem;
+
+    border: 1px solid var(--purple400);
 
     display: flex;
     justify-content: space-between;
@@ -67,4 +71,68 @@
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
+}
+
+.button_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+
+    border: 1px solid var(--purple400);
+    border-radius: 2rem;
+
+    background: transparent;
+
+    transition: .5s;
+}
+
+.button_block:is(:hover, :active) {
+    color: #fff;
+    background-color: var(--purple400);
+}
+
+.btn_title {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+
+@media screen and (max-width:425px) {
+    .modal {
+        padding: 1.5rem;
+    }
+
+    .input_block {
+        width: 16rem;
+    }
+
+
+}
+
+@media screen and (max-width:770px) {
+    .title_block {
+        padding-left: 5rem;
+    }
+    .tasks_space {
+        padding: 3rem 5rem;
+    
+    }
+
+
+    @media screen and (max-width:490px) {
+
+        .title_text {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .title_block {
+            padding-left: 0;
+            justify-content: center;
+        }
+
+        .tasks_space {
+            padding: 0;
+        }
+    }
 }
