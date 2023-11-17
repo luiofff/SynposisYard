@@ -134,7 +134,7 @@ app.post('/adddiscipline', async (req, res) => {
   try {
     const { discipline_title, email } = req.body;
    
-    const newDiscipline = await pool.query('INSERT INTO disciplines (discipline_title, email) VALUES ($1, $2) RETURNING *', [discipline_title, email]);
+    const newDiscipline = await pool.query('WITH inserted_discipline AS ( INSERT INTO disciplines (discipline_title, email) VALUES ($1, $2) RETURNING * ) INSERT INTO notes (discipline_id, note) VALUES ((SELECT id FROM inserted_discipline), $3) RETURNING *;', [discipline_title, email, []]);
     res.json(newDiscipline.rows[0]);
   } catch (err) {
     console.error(err.message);
@@ -446,7 +446,7 @@ app.post('/disciplines/:disciplineId/firstAdd', async (req, res) => {
 });
 
 app.post('/disciplines/:disciplineId/addOrUpdateNote', async (req, res) => {
-  const { discipline_id, note } = req.body;
+  const { discipline_id, note} = req.body;
 
   try {
     const checkResult = await pool.query('SELECT * FROM notes WHERE discipline_id = $1', [discipline_id]);

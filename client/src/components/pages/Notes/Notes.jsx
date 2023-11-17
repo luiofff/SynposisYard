@@ -65,17 +65,15 @@ export default function Notes() {
         discipline_id: disciplineId,
         note: note
       });
+        
+          const { action, result } = response.data;
+          if (action === 'insert') {
+            console.log('Note inserted successfully:', result);
+          } else if (action === 'update') {
+            console.log('Note updated successfully:', result);
+          }
+          window.location.reload();
 
-     
-        const { action, result } = response.data;
-
-        if (action === 'insert') {
-          console.log('Note inserted successfully:', result);
-        } else if (action === 'update') {
-          console.log('Note updated successfully:', result);
-        }
-        window.location.reload();
-      
       
     } catch (error) {
       console.error('Error adding or updating note:', error.response.data.error);
@@ -95,8 +93,8 @@ export default function Notes() {
   };
 
   const firstAdd = async () => {
-    console.log('asd')
-    const response = await axios.post(`http://localhost:8080/disciplines/${disciplineId}/addOrUpdateNote`, {
+    console.log('Calling firstAdd function');
+    const response = await axios.post(`http://localhost:8080/disciplines/${disciplineId}/firstAdd`, {
         discipline_id: disciplineId,
         note: []
     });
@@ -104,14 +102,8 @@ export default function Notes() {
 
 
 
-  React.useEffect(() => {
-
-    const fetchData = async () => {
-      await getNotes(); 
-      if (!note || note.length === 0) {
-        firstAdd(); 
-      }
-    }
+  React.useEffect(() => { 
+    getNotes();
     // trash icon settings
     const animationContainerTrash = document.querySelector("#trash");
     const animationInstanceTrash = lottie.loadAnimation({
@@ -191,8 +183,8 @@ export default function Notes() {
           
         </div>
 
-        { 
-          note.map((a) => (
+        { note && note.length > 0 ?
+          (note.map((a) => (
             <div className={styles.task_block} key={a}>
               <input 
                 id={`secondaryCheck_${a}`} 
@@ -203,7 +195,9 @@ export default function Notes() {
               />
               <label className={styles.checkbox_title} >{a}</label>
             </div>
-          ))
+          )))
+          :
+          <a>Пока заметок нет</a>
         }
 
         
