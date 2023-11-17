@@ -68,9 +68,12 @@
 }
 
 .modal_btn {
+    display: grid;
+    place-items: center;
     width: 2rem;
     height: 2rem;
-    border-radius: 50%;
+    border-radius: .5rem;
+    background-color: var(--purple400);
 }
 
 .button_block {
@@ -95,6 +98,16 @@
 .btn_title {
     font-size: 1rem;
     font-weight: bold;
+}
+
+.modal_head {
+    display: flex;
+    justify-content: end;
+    height: 5vh;
+}
+
+.empty_notes_button {
+    margin-top: 2rem;
 }
 
 
@@ -132,7 +145,7 @@
         }
 
         .tasks_space {
-            padding: 0;
+            padding: 2rem;
         }
     }
 }

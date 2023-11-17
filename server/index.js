@@ -147,7 +147,7 @@ app.post('/adddiscipline', async (req, res) => {
 app.delete("/disciplines/:disciplineId", async (req, res) => {
   try {
     const { disciplineId } = req.params;
-    const deleteDiscipline = await pool.query("DELETE FROM disciplines WHERE id = $1", [
+    const deleteDiscipline = await pool.query("WITH deleted_notes AS (DELETE FROM notes WHERE discipline_id = $1 RETURNING *) DELETE FROM disciplines WHERE id = $1", [
       disciplineId
     ]);
     
@@ -428,6 +428,22 @@ app.put("/disciplines/:disciplineId/topics/:topicId/updateMaterial", async (req,
 
 
 // Notes queries
+
+app.post('/disciplines/:disciplineId/firstAdd', async (req, res) => {
+  const { discipline_id, note } = req.body;
+
+  try {
+    const insertResult = await pool.query(
+      'INSERT INTO notes (discipline_id, note) VALUES ($1, $2) RETURNING *',
+      [discipline_id, note]
+    );
+
+    res.json({ action: 'insert', result: insertResult.rows[0] });
+  } catch (error) {
+    console.error('Error adding or updating note:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 app.post('/disciplines/:disciplineId/addOrUpdateNote', async (req, res) => {
   const { discipline_id, note } = req.body;
