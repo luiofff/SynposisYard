@@ -120,16 +120,16 @@ export default function TopicsPage() {
             <NavBar />
             <Modal open={open} onClose={() => setOpen(false)}>
                 <form onSubmit={onSubmitForm} className={styles.modal_window}>
-                <div className={styles.input_block_modal}>
-                    <input type="text"
-                    onChange={(e) => setNewMaterial(e.target.value)}
-                    className={styles.input_modal}
-                    placeholder='Название...'
-                    />
-                </div>
-                <button type="submit" className={styles.add_btn} onClick={() => setOpen(false)}>
-                    Добавить
-                </button>
+                    <div className={styles.input_block_modal}>
+                        <input type="text"
+                        onChange={(e) => setNewMaterial(e.target.value)}
+                        className={styles.input_modal}
+                        placeholder='Название...'
+                        />
+                    </div>
+                    <button type="submit" className={styles.add_btn} onClick={() => setOpen(false)}>
+                        Добавить
+                    </button>
                 </form>
             </Modal>
 

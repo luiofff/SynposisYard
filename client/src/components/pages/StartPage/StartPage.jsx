@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
 import animationLogo from "../../UI/NavBar/assets/logo.json"
 import lottie from "lottie-web";
 
 
 // components
-import NavBar from '../../UI/NavBar/NavBar'
 import RelocateButton from '../../UI/buttons/Relocate_button/RelocateButton'
 
 // styles
@@ -41,6 +39,7 @@ export default function StartPage() {
                 <a className={styles.nav_btn} href="/login">Войти</a>
             </div>
         </header>
+
         <div className={styles.title_page}>
             <div className={styles.text_button_block}>
                 <div className={styles.text_block}>

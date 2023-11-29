@@ -135,6 +135,12 @@
 }
 
 @media screen and (max-width:615px) {
+    .logo {
+        width: 7rem;
+    }
+    .primary_header {
+        padding: 0 3rem;
+    }
     .title_text {
         font-size: 2rem;
     }
@@ -156,10 +162,25 @@
 }
 
 @media screen and (max-width:880px) {
+    .logo {
+        width: 10rem;
+    }
+    .primary_header {
+        padding: 0 5rem;
+    }
     .text_block {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+}
+
+@media screen and (max-width:425px) {
+    .logo {
+        width: 5rem;
+    }
+    .primary_header {
+        padding: 0 2rem;
     }
 }
 

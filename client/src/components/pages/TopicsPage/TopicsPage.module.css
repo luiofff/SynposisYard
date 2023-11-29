@@ -285,6 +285,13 @@
 /* adapt */
 
 /* tab */
+@media screen and (max-width:620px) {
+    .modal_window {
+        height:auto;
+        width: auto;
+        padding: 2rem;
+    }
+}
 
 @media screen and (max-width:768px) {
     .main_title {

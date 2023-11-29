@@ -323,6 +323,11 @@
 /* mini tab */
 
 @media screen and (max-width:620px) {
+    .modal_window {
+       height:auto;
+       width: auto;
+       padding: 2rem;
+    }
     .main_title {
         font-size: 1.1rem;
     }
@@ -338,6 +343,7 @@
         font-size: .8rem;
     }
 }  
+
 
 /* small phone */
 

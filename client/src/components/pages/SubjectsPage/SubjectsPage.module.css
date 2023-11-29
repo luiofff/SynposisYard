@@ -191,6 +191,14 @@
     }
 }
 
+@media screen and (max-width:620px) {
+    .modal_window {
+        height:auto;
+        width: auto;
+        padding: 2rem;
+    }
+}
+
 
 .add_discipline {
     padding: 1.2rem;
